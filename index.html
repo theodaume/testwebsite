@@ -1,0 +1,1460 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Die Website</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&display=swap">
+<style>
+:root{--t-redstone:url(https://cdn.jsdelivr.net/gh/PrismarineJS/minecraft-assets@master/data/1.20.2/blocks/redstone_block.png);--t-lapis:url(https://cdn.jsdelivr.net/gh/PrismarineJS/minecraft-assets@master/data/1.20.2/blocks/lapis_block.png);--t-gold:url(https://cdn.jsdelivr.net/gh/PrismarineJS/minecraft-assets@master/data/1.20.2/blocks/gold_block.png);--t-diamond:url(https://cdn.jsdelivr.net/gh/PrismarineJS/minecraft-assets@master/data/1.20.2/blocks/diamond_block.png);--t-amethyst:url(https://cdn.jsdelivr.net/gh/PrismarineJS/minecraft-assets@master/data/1.20.2/blocks/amethyst_block.png);--t-emerald:url(https://cdn.jsdelivr.net/gh/PrismarineJS/minecraft-assets@master/data/1.20.2/blocks/emerald_block.png);--t-copper:url(https://cdn.jsdelivr.net/gh/PrismarineJS/minecraft-assets@master/data/1.20.2/blocks/copper_block.png);--t-stone:url(https://cdn.jsdelivr.net/gh/PrismarineJS/minecraft-assets@master/data/1.20.2/blocks/stone_bricks.png);--bg:#101820;--row:#17222d;--line:#243342;--tx:#e7ecef;--mu:#8a99a6;--gain:#5fd38d;--gold:#e9b44c;--bad:#e5736b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 Sora,system-ui,sans-serif;padding:16px 16px 48px}
+main{max-width:1560px;margin:0 auto}
+header{display:flex;align-items:center;gap:16px;margin-bottom:20px;flex-wrap:wrap}
+header h1{font-size:24px;margin:0;flex:1}
+nav{display:flex;gap:6px}
+button,.btn{background:var(--row);color:var(--tx);border:1px solid var(--line);border-radius:8px;padding:8px 14px;font:inherit;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+button.on{border-color:var(--gold);color:var(--gold)}
+#me img{width:24px;height:24px;border-radius:4px;image-rendering:pixelated}
+button:focus-visible,input:focus-visible,th:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:1px}
+.sub{color:var(--mu);margin:0 0 20px}
+.best{display:flex;gap:20px;align-items:center;background:var(--row);border:1px solid var(--gold);border-radius:12px;padding:18px;margin-bottom:16px;flex-wrap:wrap}
+.best h2{margin:0;font-size:22px}
+.k{color:var(--mu);font-size:12px}
+.v{font-weight:600;font-variant-numeric:tabular-nums}
+.stats{display:flex;gap:22px;flex-wrap:wrap}
+.ctl{display:flex;flex-wrap:wrap;gap:12px;background:var(--row);border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:16px;align-items:flex-end}
+label{display:flex;flex-direction:column;font-size:12px;color:var(--mu);gap:4px}
+label span{display:flex;gap:6px;align-items:center}
+input[type=number],input[type=search],input[type=text]{background:var(--bg);color:var(--tx);border:1px solid var(--line);border-radius:6px;padding:7px 9px;font:inherit;width:160px}
+.master{font-size:14px;color:var(--tx);flex-direction:row;align-items:center;gap:8px;width:100%}
+.status{color:var(--mu);font-size:13px;margin-bottom:10px}
+.status.err{color:var(--bad)}
+.wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:820px;font-variant-numeric:tabular-nums}
+th,td{padding:8px 12px;text-align:right;border-bottom:1px solid var(--line)}
+th:nth-child(-n+2),td:nth-child(-n+2){text-align:left}
+th{background:var(--row);color:var(--mu);font-weight:600;font-size:12px;cursor:pointer;white-space:nowrap;position:sticky;top:0}
+th.on{color:var(--gold)}
+tbody tr:hover{background:var(--row)}
+td.p{color:var(--gain);font-weight:600}
+.it{display:flex;align-items:center;gap:10px;font-weight:600}
+.ic{width:36px;height:36px;object-fit:contain;image-rendering:pixelated;flex:none}
+.best .ic{width:72px;height:72px}
+.head{--s:4.5px;position:relative;flex:none;width:calc(8*var(--s));height:calc(8*var(--s));background:var(--u) calc(-8*var(--s)) calc(-8*var(--s))/calc(64*var(--s)) calc(64*var(--s));image-rendering:pixelated}
+.head::after{content:"";position:absolute;inset:0;background:var(--u) calc(-40*var(--s)) calc(-8*var(--s))/calc(64*var(--s)) calc(64*var(--s))}
+.best .head{--s:9px}
+.ph{width:36px;height:36px;border-radius:6px;background:var(--line);color:var(--mu);display:grid;place-items:center;font-weight:700;flex:none}
+.best .ph{width:72px;height:72px;font-size:28px}
+.rk{color:var(--mu);width:40px}
+.score{display:inline-block;min-width:44px;padding:2px 8px;border-radius:99px;background:var(--line);color:var(--gold);font-weight:700;text-align:center}
+.note{color:var(--mu);font-size:13px;margin-top:18px;max-width:760px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:16px 0}
+.card{background:var(--row);border:1px solid var(--line);border-radius:10px;padding:16px}
+.card .big{font-size:26px;font-weight:700;color:var(--gold);font-variant-numeric:tabular-nums}
+.cards .card:nth-child(2){border-top:3px solid #6cc3ff}.cards .card:nth-child(1){border-top:3px solid var(--gold)}.cards .card:nth-child(n+3){border-top:3px solid var(--gain)}
+.prow{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap}
+.hide{display:none}
+header h1 a{color:inherit;text-decoration:none}
+.btn.on{border-color:var(--gold);color:var(--gold)}
+.hero{background:linear-gradient(135deg,#1b2b3a,#17222d 60%);border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:12px;padding:22px}
+.hero h2{margin:0 0 6px;font-size:26px;color:var(--gold)}
+.hero p{margin:0;color:var(--mu)}
+.sechd{display:flex;align-items:center;gap:8px;font-size:15px;color:var(--ac);margin:24px 0 10px}
+.sechd::before{content:"";width:10px;height:10px;border-radius:3px;background:var(--ac)}
+.infoGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;align-items:start}
+.glance{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.gl{background:var(--row);border:1px solid var(--line);border-left:4px solid var(--ac);border-radius:10px;padding:12px}
+.gl>.k{color:var(--ac);font-weight:700;margin-bottom:6px;font-size:13px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.tile{display:block;background:var(--row);border:1px solid var(--line);border-top:4px solid var(--ac);border-radius:12px;padding:16px;color:var(--tx);text-decoration:none}
+a.tile:hover{border-color:var(--ac);background:#1c2a38}
+.tile b{display:block;color:var(--ac);font-size:16px;margin-bottom:4px}
+.tile span{color:var(--mu);font-size:13px}
+.tile.soon{opacity:.6}
+.tile .badge{float:right;font-size:11px;border:1px solid var(--line);border-radius:99px;padding:1px 8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+.skill{background:var(--bg);border:1px solid var(--line);border-top:3px solid var(--ac);border-radius:8px;padding:10px}
+.skill .row{display:flex;justify-content:space-between;font-size:13px}
+.skill .row b{color:var(--ac)}
+.bar{height:6px;background:var(--line);border-radius:99px;overflow:hidden;margin:6px 0}
+.bar i{display:block;height:100%;background:var(--ac)}
+.pcol{display:grid;gap:12px;margin-top:14px}
+.nw{display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap;margin-top:12px}
+.hh{font-weight:700;margin:14px 0 4px}
+.page{display:grid;grid-template-columns:270px minmax(0,1fr);gap:18px;align-items:start}
+@media(max-width:800px){.page{grid-template-columns:1fr}}
+.info{position:sticky;top:12px;max-height:calc(100vh - 24px);overflow:auto;scrollbar-width:thin}
+.sec{background:var(--row);border:1px solid var(--line);border-left:4px solid var(--ac);border-radius:10px;overflow:hidden}
+.sec summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px;padding:10px 12px;font-weight:700;font-size:14px;color:var(--ac);background:color-mix(in srgb,var(--ac) 10%,transparent)}
+.sec summary::-webkit-details-marker{display:none}
+.sec summary::after{content:"";margin-left:auto;width:8px;height:8px;border-right:2px solid var(--ac);border-bottom:2px solid var(--ac);transform:rotate(45deg);transition:transform .2s}
+.sec[open] summary::after{transform:rotate(-135deg)}
+.sec .sb{padding:10px 12px}
+.sec summary:focus-visible{outline:2px solid var(--gold);outline-offset:-2px}
+@media(prefers-reduced-motion:reduce){.sec summary::after{transition:none}}
+.info{display:grid;gap:12px}
+h1{color:var(--gold);letter-spacing:.2px}
+.ctl{border-left:4px solid #6cc3ff}
+.ctl .ttl{font-weight:700;color:#6cc3ff;margin-bottom:8px;font-size:14px}
+.orders{border-left:4px solid #ff9f6b}
+.orders h3{color:#ff9f6b}
+.best{border-left:4px solid var(--gold)}
+.best .k:first-of-type{color:var(--gold);font-weight:700}
+th{border-top:3px solid #6cc3ff}
+th.on{border-top-color:var(--gold)}
+.sub{border-left:3px solid var(--gain);padding-left:10px}
+.card .k{color:#b58cff;font-weight:600}
+.info .card h3{margin:0 0 8px;font-size:13px;color:var(--mu);font-weight:600}
+.info .row{display:flex;justify-content:space-between;gap:8px;font-size:13px;padding:3px 0}
+.info .row b{font-weight:600}
+.info .big{font-size:18px;color:var(--tx)}
+.info .perk{font-size:12px;color:var(--mu)}
+.live{color:var(--gain);font-weight:700}
+.ctl{display:block}
+.fbody{display:grid;grid-template-rows:1fr;transition:grid-template-rows .25s ease}
+.fbody.closed{grid-template-rows:0fr}
+.fbody>div{overflow:hidden;display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end}
+.fbody:not(.closed)>div{padding-top:12px}
+@media(prefers-reduced-motion:reduce){.fbody{transition:none}}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:16px;align-items:start}
+@media(max-width:1000px){.layout{grid-template-columns:1fr}}
+.orders{background:var(--row);border:1px solid var(--line);border-radius:10px;padding:14px}
+.orders h3{margin:0 0 10px;font-size:16px}
+.orders form{display:grid;gap:8px;margin-bottom:12px}
+.orders input,.orders select{width:100%;background:var(--bg);color:var(--tx);border:1px solid var(--line);border-radius:6px;padding:7px 9px;font:inherit}
+.ord{border-top:1px solid var(--line);padding:10px 0;display:grid;gap:2px;font-size:13px}
+.ord b{font-size:14px}
+.st{font-weight:700}.st.bad{color:var(--bad)}.st.ok{color:var(--gain)}.st.eq{color:var(--gold)}
+.ord button{padding:2px 8px;font-size:12px;justify-self:start}
+textarea{width:100%;min-height:80px;background:var(--bg);color:var(--tx);border:1px solid var(--line);border-radius:6px;padding:8px;font:12px monospace}
+details{margin:10px 0}
+
+/* ---- Start: Minecraft-Block-Optik (nur Texturen und Kanten, Schrift bleibt) ---- */
+#vStart .sec,#vStart .gl,#vStart .tile,#vStart .hero{
+  border:3px solid #0b0f14;border-radius:0;
+  background-color:#17222d;
+  background-image:linear-gradient(rgba(12,18,25,.80),rgba(12,18,25,.80)),var(--tex);
+  background-size:auto,48px;background-repeat:no-repeat,round;image-rendering:pixelated;
+  box-shadow:inset 3px 3px 0 rgba(255,255,255,.18),inset -3px -3px 0 rgba(0,0,0,.5)}
+#vStart .hero{background-image:linear-gradient(rgba(12,18,25,.70),rgba(12,18,25,.70)),var(--tex);padding:16px 22px}
+#vStart .hero h2{margin:0;text-shadow:3px 3px 0 rgba(0,0,0,.6)}
+#vStart .sec summary{background:linear-gradient(rgba(0,0,0,.22),rgba(0,0,0,.22)),var(--tex);background-size:auto,48px;background-repeat:no-repeat,round;image-rendering:pixelated;color:#fff;text-shadow:2px 2px 0 rgba(0,0,0,.65);border-bottom:3px solid rgba(0,0,0,.55)}
+#vStart .sec:not([open]) summary{border-bottom:0}
+#vStart .sec summary::after{border-color:#fff;filter:drop-shadow(1px 1px 0 rgba(0,0,0,.6))}
+#vStart .gl>.k,#vStart .tile b{color:#fff;text-shadow:2px 2px 0 rgba(0,0,0,.65)}
+#vStart .tile span{color:#cfd8de}
+#vStart .tile .badge{border:2px solid rgba(0,0,0,.6);background:rgba(0,0,0,.35);color:#cfd8de;border-radius:0}
+#vStart a.tile:hover{filter:brightness(1.18);background-color:#17222d}
+#vStart .sechd::before{border-radius:0;box-shadow:inset 2px 2px 0 rgba(255,255,255,.35),inset -2px -2px 0 rgba(0,0,0,.4)}
+.chip{display:inline-block;padding:1px 9px;font-weight:700;font-size:12px;border:2px solid rgba(0,0,0,.55);border-radius:0;text-shadow:1px 1px 0 rgba(0,0,0,.45);margin-bottom:2px}
+header{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px}
+header #me{justify-self:end}
+.hub{font-size:22px;font-weight:700;letter-spacing:.5px;color:var(--gold);text-decoration:none;padding:6px 26px;background:#17222d;border:3px solid #0b0f14;box-shadow:inset 3px 3px 0 rgba(255,255,255,.18),inset -3px -3px 0 rgba(0,0,0,.5);text-shadow:2px 2px 0 rgba(0,0,0,.6)}
+.hub:hover{filter:brightness(1.2)}
+.hub.on{color:#fff;background:#243342}
+@media(max-width:640px){header{grid-template-columns:1fr auto}.hub{grid-column:1/-1;grid-row:1;justify-self:center}}
+a.wk{color:inherit;text-decoration:none;display:inline-block;transition:transform .15s ease;transform-origin:left center}
+a.wk:hover,a.wk:focus-visible{transform:scale(1.12)}
+@media(prefers-reduced-motion:reduce){a.wk{transition:none}}
+#gate{position:fixed;inset:0;z-index:100;display:grid;place-items:center;background:rgba(8,12,17,.9);padding:16px}
+#gate.hide{display:none}
+.gbox{width:min(460px,100%);background:#17222d;border:3px solid #0b0f14;box-shadow:inset 3px 3px 0 rgba(255,255,255,.18),inset -3px -3px 0 rgba(0,0,0,.5);padding:22px;display:grid;gap:14px}
+.gbox h2{margin:0;color:var(--gold);text-shadow:2px 2px 0 rgba(0,0,0,.6)}
+.gbox p{margin:0 0 8px;color:var(--mu);font-size:14px}
+.gbox input,.gbox select{width:100%;background:var(--bg);color:var(--tx);border:1px solid var(--line);border-radius:6px;padding:8px 10px;font:inherit}
+.gbox .prow label{flex:1;min-width:120px}
+
+/* ---- Rubriken-Leiste: fast am unteren Rand, bleibt beim Scrollen stehen ---- */
+#vStart{padding-bottom:150px}
+.dock{position:fixed;left:12px;right:12px;bottom:22px;z-index:50;display:flex;gap:12px;overflow-x:auto;padding:6px 4px 10px;scrollbar-width:thin}
+.dock>:first-child{margin-left:auto}.dock>:last-child{margin-right:auto}
+.dock .tile{flex:0 0 auto;width:min(230px,70vw);padding:12px 14px}
+.dock .tile b{font-size:15px}
+.dock .tile span{font-size:12px}
+#vStart .tile:not(.soon){background-image:linear-gradient(rgba(12,18,25,.34),rgba(12,18,25,.34)),var(--tex);filter:saturate(1.15) brightness(1.08);box-shadow:inset 3px 3px 0 rgba(255,255,255,.28),inset -3px -3px 0 rgba(0,0,0,.45),0 8px 16px rgba(0,0,0,.55)}
+#vStart .tile:not(.soon) span{color:#f4f7f9;text-shadow:1px 1px 0 rgba(0,0,0,.75)}
+#vStart a.tile:hover{filter:saturate(1.2) brightness(1.25)}
+#vStart .tile.soon{background-image:linear-gradient(rgba(12,18,25,.80),rgba(12,18,25,.80)),var(--tex);box-shadow:inset 3px 3px 0 rgba(255,255,255,.18),inset -3px -3px 0 rgba(0,0,0,.5),0 8px 16px rgba(0,0,0,.45)}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.mc{background:var(--row);border:3px solid #0b0f14;border-left:6px solid var(--ac);padding:12px;display:grid;gap:8px;box-shadow:inset 2px 2px 0 rgba(255,255,255,.1),inset -2px -2px 0 rgba(0,0,0,.4)}
+.mc .top{display:flex;gap:10px;align-items:center;font-weight:700}
+.pills{display:flex;flex-wrap:wrap;gap:4px}
+.pill{font-size:11px;font-weight:700;padding:1px 6px;border:2px solid #0b0f14;background:#243342;color:var(--mu)}
+.pill.on{background:#2f9e5b;color:#fff}
+.rq{font-size:13px}.rq b{color:var(--ac)}
+.st2{font-weight:700;font-size:12px}
+.ht{border-collapse:collapse;font-size:13px}.ht th,.ht td{padding:4px 8px;text-align:left;border-bottom:1px solid var(--line)}.ht input{width:120px;background:var(--bg);color:var(--tx);border:1px solid var(--line);border-radius:6px;padding:4px 6px;font:inherit}
+.pt{outline:none;cursor:default}.pt .tip{opacity:0;pointer-events:none;transition:opacity .08s}.pt:hover .tip,.pt:focus .tip{opacity:1}.pt:hover .dot,.pt:focus .dot{r:6}
+#vHome .hero{padding:56px 22px;text-align:center}
+#vHome .hero h2{font-size:42px}
+.invisible{visibility:hidden}
+header #hBack{grid-column:1;grid-row:1;justify-self:start}
+header #hHub{grid-column:2;grid-row:1}
+header #me{grid-column:3;grid-row:1;justify-self:end}
+.topbar{display:flex;align-items:center;gap:16px;margin-bottom:18px}
+.topbar h2{margin:0;font-size:24px;color:var(--gold)}
+.np{display:grid;grid-template-columns:250px minmax(0,1fr);gap:18px;align-items:start}
+@media(max-width:760px){.np{grid-template-columns:1fr}}
+.np-list{display:grid;gap:8px}
+.np-list input{width:100%;background:var(--bg);color:var(--tx);border:1px solid var(--line);border-radius:6px;padding:8px 10px;font:inherit}
+.np-item{display:block;width:100%;text-align:left;background:#fff3a3;color:#3a3320;border:1px solid #d8c768;border-radius:2px;padding:8px 10px;box-shadow:1px 2px 0 rgba(0,0,0,.35);font:inherit}
+.np-item b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:14px}
+.np-item span{font-size:11px;color:#7a6f45}
+.np-item.on{background:#ffe96b;outline:2px solid var(--gold)}
+.binding{height:30px;border-radius:6px 6px 0 0;background:radial-gradient(circle at 14px 15px,#12151a 6px,#6d7580 7px,transparent 8px) 0 0/34px 30px repeat-x,linear-gradient(#4a5058,#2f343b)}
+.paper{position:relative;background:#fff6b0;box-shadow:0 8px 18px rgba(0,0,0,.45)}
+.paper::before{content:"";position:absolute;top:0;bottom:0;left:56px;width:2px;background:#e06c6c;box-shadow:5px 0 0 #e06c6c;pointer-events:none}
+.paper textarea{display:block;width:100%;min-height:520px;resize:vertical;border:0;outline:0;background-color:transparent;background-image:repeating-linear-gradient(transparent 0,transparent 31px,#9cc3df 31px,#9cc3df 32px);background-attachment:local;background-position:0 8px;color:#1d2b4f;font:19px/32px "Segoe Print","Bradley Hand","Chalkboard SE","Comic Sans MS",cursive;padding:8px 18px 8px 78px}
+.paper textarea:focus-visible{box-shadow:inset 0 0 0 2px rgba(233,180,76,.7)}
+.paper textarea:disabled{opacity:.5}
+.np-bar{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
+.ai-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-bottom:26px}
+.ai{background:var(--row);border:1px solid var(--line);border-top:4px solid var(--ac);border-radius:12px;padding:16px;display:grid;gap:10px;align-content:start}
+.ai h3{margin:0;color:var(--ac);font-size:18px}
+.ai p{margin:0;color:var(--mu);font-size:13px}
+.ai .btn{justify-self:start;border-color:var(--ac)}
+.pr{background:var(--row);border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:10px;padding:14px}
+.pr label{display:flex;flex-direction:column;gap:4px}
+.pr input,.pr textarea{background:var(--bg);color:var(--tx);border:1px solid var(--line);border-radius:8px;padding:10px;font:inherit}
+.pr textarea{min-height:330px;font:13px/1.55 ui-monospace,Consolas,monospace;resize:vertical}
+/* ---- Startseite: Pinnwand ---- */
+.board{position:relative;height:650px;margin-top:22px;border:14px solid #33241a;border-radius:8px;
+  background-color:#5a4332;
+  background-image:radial-gradient(rgba(0,0,0,.22) 1px,transparent 1.6px),radial-gradient(rgba(255,235,210,.07) 1px,transparent 1.6px),radial-gradient(rgba(20,10,4,.2) 2px,transparent 2.6px);
+  background-size:9px 9px,13px 13px,23px 23px;background-position:0 0,4px 6px,9px 3px;
+  box-shadow:inset 0 0 70px rgba(0,0,0,.65),0 8px 22px rgba(0,0,0,.55)}
+.board .tile{position:absolute;left:var(--x);top:var(--y);width:236px;transform:rotate(var(--r));background:var(--paper);color:#2a2a2a;border:0;border-radius:2px;padding:24px 16px 14px;box-shadow:2px 5px 10px rgba(0,0,0,.55);filter:brightness(.86) saturate(.92);transition:transform .15s ease,box-shadow .15s ease,filter .15s ease}
+.board .tile::before{content:"";position:absolute;top:-9px;left:50%;width:18px;height:18px;margin-left:-9px;border-radius:50%;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.85),transparent 38%),var(--ac);box-shadow:0 4px 5px rgba(0,0,0,.5)}
+.board .tile b{color:#1f2a24;font-size:17px}
+.board .tile span{color:#4a4538;font-size:13px}
+.board a.tile:hover,.board a.tile:focus-visible{transform:rotate(0) scale(1.07);z-index:3;box-shadow:4px 10px 18px rgba(0,0,0,.6);background:var(--paper);filter:brightness(1) saturate(1)}
+.board .tile.soon{opacity:.82;outline:2px dashed rgba(60,45,20,.45);outline-offset:-6px}
+.board .tile .badge{float:right;font-size:11px;border:1px solid rgba(60,45,20,.5);border-radius:99px;padding:1px 8px;color:#5a4a2a;background:transparent}
+@media(max-width:820px){.board{height:auto;display:grid;gap:30px;padding:36px 18px}.board .tile{position:relative;left:auto;top:auto;width:min(300px,100%)}.board .tile:nth-child(odd){justify-self:start}.board .tile:nth-child(even){justify-self:end}}
+.cal-today{background:linear-gradient(135deg,#2a2412,#17222d 70%);border:1px solid var(--gold);border-left:6px solid var(--gold);border-radius:12px;padding:20px 24px;margin-bottom:20px}
+.cal-today .ct{color:var(--gold);font-size:15px;font-weight:700;letter-spacing:.4px;text-transform:uppercase}
+.cal-today .cd{font-size:30px;font-weight:700;margin:2px 0 12px}
+.cal-today .ce{font-size:24px;line-height:1.4;padding:6px 0;border-top:1px solid var(--line)}
+.cal-today .ce b{color:var(--gold);margin-right:12px;font-variant-numeric:tabular-nums}
+.cal-today .ce.done{text-decoration:line-through;opacity:.5}
+.cal{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:20px;align-items:start}
+@media(max-width:900px){.cal{grid-template-columns:1fr}}
+.cal-nav{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.cal-nav h3{margin:0;flex:1;text-align:center;font-size:26px;color:#6cc3ff}
+.cal-nav button{font-size:18px;padding:8px 16px}
+.cal-tog{flex-direction:row!important;align-items:center;gap:6px!important;font-size:14px!important;color:var(--tx)!important}
+.cal-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.cal-head div{text-align:center;color:var(--mu);font-size:14px;font-weight:700;padding:6px 0}
+.cal-day{min-height:132px;text-align:left;background:var(--row);border:1px solid var(--line);border-radius:8px;padding:7px 8px;display:flex;flex-direction:column;gap:3px;font:inherit;color:var(--tx);cursor:pointer}
+.cal-day:hover{border-color:#6cc3ff}
+.cal-day.out{opacity:.4}
+.cal-day.today{border-color:var(--gold);box-shadow:inset 0 0 0 1px var(--gold)}
+.cal-day.sel{background:#1d3042;border-color:#6cc3ff}
+.cal-day .n{font-size:17px;font-weight:700}
+.cal-day.today .n{color:var(--gold)}
+.cal-day .c{font-size:13px;background:#243342;border-left:3px solid #6cc3ff;border-radius:2px;padding:1px 5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.c.h{background:#3a2226!important;border-left-color:#e5736b!important;color:#ffd6d2}
+.c.r{background:#3a2d1c!important;border-left-color:#ff9f6b!important;color:#ffe0c8}
+.c.o{background:#2d2540!important;border-left-color:#b58cff!important;color:#e6dcff}
+.cal-day .c.done{text-decoration:line-through;opacity:.55}
+.cal-day .m{font-size:12px;color:var(--mu)}
+.cal-hol{padding:5px 8px;margin-bottom:4px;border-left:4px solid var(--hc);background:rgba(255,255,255,.04);font-size:14px}
+.cal-today .hol{font-size:22px;margin:0 0 10px;font-weight:700}
+.cal-side{background:var(--row);border:1px solid var(--line);border-top:4px solid #6cc3ff;border-radius:10px;padding:14px;display:grid;gap:10px}
+.cal-side h3{margin:0;font-size:18px;color:#6cc3ff}
+.cal-ent{display:flex;gap:8px;align-items:flex-start;padding:6px 0;border-bottom:1px solid var(--line)}
+.cal-ent input[type=checkbox]{margin-top:4px}
+.cal-ent .t{flex:1;word-break:break-word}
+.cal-ent .t b{color:var(--gold);margin-right:6px;font-variant-numeric:tabular-nums}
+.cal-ent.done .t{text-decoration:line-through;opacity:.5}
+.cal-ent button{padding:0 8px;font-size:16px;line-height:1.4}
+#calForm{display:grid;grid-template-columns:100px 1fr;gap:8px}
+#calForm input{background:var(--bg);color:var(--tx);border:1px solid var(--line);border-radius:6px;padding:8px;font:inherit;min-width:0}
+#calForm button{grid-column:1/-1}
+.paper textarea.hide,.paper .ideas.hide{display:none}
+.paper .ideas{min-height:520px;padding:8px 18px 8px 78px;color:#1d2b4f;background-image:repeating-linear-gradient(transparent 0,transparent 31px,#9cc3df 31px,#9cc3df 32px);background-position:0 8px;font:18px/32px "Segoe Print","Bradley Hand","Chalkboard SE","Comic Sans MS",cursive}
+.paper .ideas .it{font-size:22px;font-weight:700}
+.paper .ideas label{display:flex;gap:10px;align-items:flex-start;color:#1d2b4f;font-size:inherit}
+.paper .ideas label input{margin-top:9px;flex:none;width:16px;height:16px}
+.paper .ideas label.done span{text-decoration:line-through;opacity:.5}
+.paper .ideas small{font:12px/32px system-ui,sans-serif;color:#6a6a8a;margin-right:6px}
+.np-item.claude{background:#bfe3ff;border-color:#7fb3dd;color:#12304a}
+.np-item.claude span{color:#35607f}
+.today-strip{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin-top:14px;padding:10px 16px;background:var(--row);border:1px solid var(--line);border-left:4px solid #6cc3ff;border-radius:8px;font-size:14px;color:var(--tx);text-decoration:none}
+.today-strip:hover{border-color:#6cc3ff}
+.today-strip .lbl{color:#6cc3ff;font-weight:700}
+.today-strip .ch{padding:1px 9px;border-left:3px solid var(--cc,#6cc3ff);background:rgba(255,255,255,.05);border-radius:2px;white-space:nowrap}
+.today-strip .mu{color:var(--mu)}
+.today-strip .sp{flex:1}
+#lock{position:fixed;inset:0;z-index:200;display:grid;place-items:center;background:#0b1118;padding:16px}
+#lock.hide{display:none}
+</style>
+</head>
+<body>
+<div id="lock" role="dialog" aria-modal="true" aria-labelledby="lockTitle">
+  <form id="lockForm" class="gbox" autocomplete="on">
+    <h2 id="lockTitle">Die Website</h2>
+    <label>Passwort<input id="lockPw" type="password" autocomplete="current-password" required></label>
+    <div id="lockErr" class="status err" role="alert"></div>
+    <button>Öffnen</button>
+  </form>
+</div>
+<div id="gate" class="hide" role="dialog" aria-modal="true" aria-labelledby="gTitle">
+ <div class="gbox">
+  <h2 id="gTitle">Tagescheck</h2>
+  <div id="gNwPart">
+    <p>Trag deinen aktuellen Networth ein, bevor du weitermachst. Das ist einmal pro Tag nötig.</p>
+    <a class="btn" id="gSc" href="https://sky.shiiyu.moe/stats/LachCash" target="_blank" rel="noopener" style="margin-bottom:10px">SkyCrypt von LachCash öffnen</a>
+    <div class="prow"><label>Networth<input id="gNwVal" type="number" step="0.01" min="0"></label>
+    <label>Einheit<select id="gNwUnit"><option value="1e6">M</option><option value="1e9" selected>B</option></select></label></div>
+  </div>
+  <div id="gKeyPart" class="hide">
+    <p>Dein Hypixel-API-Key ist nicht mehr gültig. Hol dir im <a href="https://developer.hypixel.net/dashboard" target="_blank" rel="noopener" style="color:var(--gold)">Developer Dashboard</a> einen neuen und trag ihn hier ein.</p>
+    <label>Neuer Key<input id="gKey" type="password" autocomplete="off"></label>
+    <button id="gSkipKey" type="button" style="margin-top:8px">Ohne Key weitermachen</button>
+  </div>
+  <div id="gErr" class="status err" role="alert"></div>
+  <button id="gGo">Weiter</button>
+ </div>
+</div>
+<main>
+<header id="hdr" class="hide">
+  <a class="btn" id="hBack" href="#home">Die Website</a>
+  <a class="hub" id="hHub" href="#skyblock">Hub</a>
+  <button id="me" aria-label="Mein SkyBlock-Profil">Profil</button>
+</header>
+
+<!-- ============ STARTSEITE: DIE WEBSITE (neue Bereiche hier als Kachel + Abschnitt ergänzen) ============ -->
+<section id="vHome">
+  <div class="hero" style="--tex:var(--t-stone)"><h2>Die Website</h2></div>
+  <a id="homeToday" class="today-strip" href="#kalender" aria-label="Heute, zum Kalender"></a>
+  <nav class="board" aria-label="Bereiche">
+    <a class="tile" href="#skyblock" style="--ac:#5fd38d;--paper:#c9eccf;--x:6%;--y:5%;--r:-3deg"><b>Hypixel SkyBlock</b><span>Bazaar-Flips, Minions, Profil und Infos zum Spiel.</span></a>
+    <a class="tile" href="#notepad" style="--ac:#e9c46a;--paper:#fff3a3;--x:38%;--y:2%;--r:2.5deg"><b>Notepad</b><span>Notizen, die sich automatisch speichern.</span></a>
+    <a class="tile" href="#ki" style="--ac:#3fd0c9;--paper:#c4efeb;--x:70%;--y:8%;--r:-2deg"><b>KI-Generatoren</b><span>Links zu den KIs und ein Prompt, damit sie nichts kaputt machen.</span></a>
+    <div class="tile soon" style="--ac:#e5736b;--paper:#f7c4bf;--x:16%;--y:41%;--r:4deg"><span class="badge">Idee</span><b>Gym</b><span>Training und Fortschritt.</span></div>
+    <a class="tile" href="#kalender" style="--ac:#6cc3ff;--paper:#c6dff7;--x:50%;--y:44%;--r:-4deg"><b>Kalender</b><span>Termine eintragen, heute groß im Blick.</span></a>
+    <div class="tile soon" style="--ac:#ff9f6b;--paper:#ffdcb8;--x:7%;--y:73%;--r:-2deg"><span class="badge">Idee</span><b>Essen</b><span>Pläne und Rezepte.</span></div>
+    <div class="tile soon" style="--ac:#b58cff;--paper:#e0d2f7;--x:40%;--y:76%;--r:3deg"><span class="badge">Idee</span><b>Gaming</b><span>Weitere Spiele und Tools.</span></div>
+  </nav>
+</section>
+
+<!-- ============ BEREICH KALENDER ============ -->
+<section id="vCal" class="hide">
+  <div class="topbar"><a class="btn" href="#home">Die Website</a><h2>Kalender</h2></div>
+  <div id="calToday" class="cal-today hide"></div>
+  <div class="cal">
+    <div>
+      <div class="cal-nav"><button id="calPrev" aria-label="Voriger Monat">‹</button><h3 id="calTitle"></h3><button id="calNext" aria-label="Nächster Monat">›</button><button id="calNow">Heute</button><label class="cal-tog"><input type="checkbox" id="calHol" checked> Feiertage</label></div>
+      <div class="cal-grid cal-head" id="calHead"></div>
+      <div class="cal-grid" id="calDays"></div>
+    </div>
+    <aside class="cal-side">
+      <h3 id="calSel"></h3>
+      <div id="calList"></div>
+      <form id="calForm"><input type="time" id="calTime" aria-label="Uhrzeit (optional)"><input type="text" id="calText" placeholder="Neuer Eintrag" required maxlength="200" aria-label="Eintrag"><button>Hinzufügen</button></form>
+    </aside>
+  </div>
+</section>
+
+<!-- ============ BEREICH KI-GENERATOREN ============ -->
+<section id="vKi" class="hide">
+  <div class="topbar"><a class="btn" href="#home">Die Website</a><h2>KI-Generatoren</h2></div>
+  <div class="ai-grid">
+    <div class="ai" style="--ac:#d97757"><h3>Claude</h3><p>Hauptfunktionen: SkyBlock (Daten, Verlauf, Tagescheck), Umbauten und alles, was bestehende Teile ändert.</p><a class="btn" href="https://claude.ai" target="_blank" rel="noopener">Claude öffnen</a></div>
+    <div class="ai" style="--ac:#10a37f"><h3>ChatGPT</h3><p>Neue Bereiche ergänzen, wenn Claude gerade pausiert.</p><a class="btn" href="https://chatgpt.com" target="_blank" rel="noopener">ChatGPT öffnen</a></div>
+    <div class="ai" style="--ac:#4f9cf0"><h3>Gemini</h3><p>Neue Bereiche ergänzen, kommt gut mit langen Dateien klar.</p><a class="btn" href="https://gemini.google.com" target="_blank" rel="noopener">Gemini öffnen</a></div>
+    <div class="ai" style="--ac:#7c8cff"><h3>DeepSeek</h3><p>Neue Bereiche ergänzen, als Ersatz, wenn die anderen ausgelastet sind.</p><a class="btn" href="https://chat.deepseek.com" target="_blank" rel="noopener">DeepSeek öffnen</a></div>
+  </div>
+  <h3 class="sechd" style="--ac:#e9b44c;margin-top:0">Start-Prompt für ChatGPT, Gemini und DeepSeek</h3>
+  <div class="pr">
+    <label>Deine Aufgabe (wird unten an den Prompt gehängt)<input id="kiTask" type="text" placeholder="z. B. Baue eine Rubrik Gym mit Trainingsplan und Gewichtsverlauf" style="width:100%"></label>
+    <label style="margin-top:10px">Fertiger Prompt<textarea id="kiPrompt" readonly></textarea></label>
+    <div class="np-bar" style="margin-top:10px"><span id="kiStatus" class="k"></span><button id="kiCopy">Prompt kopieren</button></div>
+    <p class="note">Gib der KI zusammen mit dem Prompt die komplette Datei <b>die-website.html</b> (nicht die Icon-Datei) und speichere vorher eine Kopie. Claude übernimmt danach alles, was bestehende Bereiche betrifft.</p>
+  </div>
+</section>
+
+<!-- ============ BEREICH NOTEPAD ============ -->
+<section id="vNotes" class="hide">
+  <div class="topbar"><a class="btn" href="#home">Die Website</a><h2>Notepad</h2></div>
+  <div class="np">
+    <aside class="np-list">
+      <button id="npNew">+ Neue Notiz</button>
+      <input id="npQ" type="search" placeholder="Notizen durchsuchen" aria-label="Notizen durchsuchen">
+      <div id="npItems"></div>
+    </aside>
+    <div>
+      <div class="binding" aria-hidden="true"></div>
+      <div class="paper"><textarea id="npText" spellcheck="true" placeholder="Schreib hier deine Notiz …" aria-label="Notiz"></textarea><div id="npIdeas" class="ideas hide"></div></div>
+      <div class="np-bar"><span id="npStatus" class="k"></span><button id="npDel">Notiz löschen</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BEREICH HYPIXEL SKYBLOCK: START ============ -->
+<section id="vStart">
+  <div class="hero" style="--tex:var(--t-stone)"><h2>Hypixel SkyBlock</h2></div>
+  <h3 class="sechd" style="--ac:#e9b44c;--tex:var(--t-gold)">Jetzt in SkyBlock</h3>
+  <div class="infoGrid" id="info">
+  <details class="sec" style="--ac:#6cc3ff;--tex:var(--t-lapis)"><summary>SkyBlock-Zeit</summary><div class="sb"><div class="big" id="sbTime">…</div><div class="perk" id="sbSeason"></div></div></details>
+  <details class="sec" style="--ac:#e9b44c;--tex:var(--t-gold)"><summary>Mayor &amp; Minister</summary><div class="sb"><div id="mayor" class="perk">Lade …</div></div></details>
+  <details class="sec" style="--ac:#3fd0c9;--tex:var(--t-diamond)"><summary>Events</summary><div class="sb"><div id="events"></div></div></details>
+  <details class="sec" style="--ac:#b58cff;--tex:var(--t-amethyst)"><summary>Bingo</summary><div class="sb"><div id="bingo" class="perk">Lade …</div></div></details>
+</div>
+  <h3 class="sechd" style="--ac:#5fd38d;--tex:var(--t-emerald)">Auf einen Blick</h3>
+  <div class="glance">
+    <div class="gl" style="--ac:#5fd38d;--tex:var(--t-emerald)"><div class="k">Bester Flip jetzt</div><div id="gBest"></div></div>
+    <div class="gl" style="--ac:#e9b44c;--tex:var(--t-gold)"><div class="k">Gesamtes Geld</div><div id="gMoney"></div></div>
+    <div class="gl" style="--ac:#6cc3ff;--tex:var(--t-lapis)"><div class="k">Networth</div><div id="gNw"></div></div>
+  </div>
+  <nav class="dock" aria-label="Rubriken">
+    <a class="tile" href="#skyblock/bazaar" style="--ac:#5fd38d;--tex:var(--t-emerald)"><b>Bazaar-Flips</b><span>Die besten Flips nach Gewinn und Marktvolumen, mit deinen eigenen Orders.</span></a>
+    <a class="tile" href="#skyblock/profil" style="--ac:#e9b44c;--tex:var(--t-gold)"><b>Profil</b><span>Purse, Bank, Networth, Verlauf, Skills und Stats.</span></a>
+    <a class="tile" href="#skyblock/minions" style="--ac:#3fd0c9;--tex:var(--t-diamond)"><b>Minion-Collection</b><span>Deine Minions, was dir fehlt und was du craften kannst.</span></a>
+    <div class="tile soon" style="--ac:#b58cff;--tex:var(--t-amethyst)"><span class="badge">Idee</span><b>Auktionshaus-Flips</b><span>BIN-Schnäppchen finden.</span></div>
+    <div class="tile soon" style="--ac:#ff9f6b;--tex:var(--t-copper)"><span class="badge">Idee</span><b>Craft-Flips</b><span>Items aus Zutaten herstellen und mit Gewinn verkaufen.</span></div>
+    
+  </nav>
+</section>
+
+<!-- ============ RUBRIK: BAZAAR-FLIPS ============ -->
+
+<section id="vFlips" class="hide">
+<div id="best"></div>
+<div class="ctl">
+  <div class="ttl">Filter</div>
+  <label class="master"><input id="master" type="checkbox" checked> Filter verwenden (aus = alle Items mit positiver Marge, nur nach Score gerankt, Filtermenü klappt ein)</label>
+  <div class="fbody" id="fbody"><div>
+  <label><span><input type="checkbox" id="onVol" checked> Mindestvolumen/Woche</span><input id="minVol" type="number" value="200000" step="10000"></label>
+  <label><span><input type="checkbox" id="onMin" checked> Mindest-Einkaufspreis</span><input id="minPrice" type="number" value="100"></label>
+  <label><span><input type="checkbox" id="onMax" checked> Max. Einkaufspreis</span><input id="maxPrice" type="number" value="1000000"></label>
+  <label><span><input type="checkbox" id="onRoi" checked> Max. Marge in %</span><input id="maxRoi" type="number" value="40"></label>
+  <label>Bazaar-Steuer in %<input id="tax" type="number" value="1.25" step="0.125"></label>
+  <label>Suche<input id="q" type="search" placeholder="z. B. Enchanted"></label>
+  </div></div>
+</div>
+<div id="status" class="status">Lade Daten …</div>
+<div class="layout">
+<div class="wrap"><table><thead><tr id="head"></tr></thead><tbody id="body"></tbody></table></div>
+<aside class="orders">
+  <h3>Meine Bazaar-Orders</h3>
+  <form id="ordForm" autocomplete="off">
+    <input id="oItem" list="oList" placeholder="Item, z. B. Enchanted Diamond" required>
+    <datalist id="oList"></datalist>
+    <select id="oType"><option value="buy">Kauforder</option><option value="sell">Verkaufsorder</option></select>
+    <input id="oPrice" type="number" step="0.1" min="0" placeholder="Preis pro Stück" required>
+    <button>Order hinzufügen</button>
+  </form>
+  <div id="ordList"></div>
+</aside>
+</div>
+<p class="note"><b>Flip-Score (0–100):</b> Er beruht auf dem geschätzten Gewinn pro Stunde (Gewinn pro Stück × Wochenvolumen/168 × 5 %). Abgezogen wird bei auffällig hohen Margen über 20 % (oft Manipulation) und bei wenigen offenen Orders. Das beste Item bekommt 100, alle anderen werden relativ dazu bewertet. Das ist eine Schätzung, kein Versprechen.</p>
+</section>
+
+<!-- ============ RUBRIK: MINIONS ============ -->
+<section id="vMinions" class="hide">
+  <h3 class="sechd" style="--ac:#3fd0c9;margin-top:0">Minion-Collection</h3>
+  <div id="mStatus" class="status">Öffne diese Rubrik mit eingetragenem Hypixel-API-Key (Profil → Zugang), um deine Minions zu laden.</div>
+  <div class="ctl" style="border-left-color:#3fd0c9">
+    <div class="prow">
+      <label>Anzeige<select id="mShow"><option value="missing">Nur fehlende Minions</option><option value="ready">Nur craftbare</option><option value="all">Alle</option></select></label>
+      <label>Sortierung<select id="mSort"><option value="ready">Craftbar zuerst, dann günstig</option><option value="new">Neueste zuerst</option><option value="cost">Günstigste zuerst</option><option value="name">Name</option></select></label>
+      <label>Suche<input id="mQ" type="search" placeholder="z. B. Redstone"></label>
+      <button id="mReload">Neu laden</button>
+    </div>
+  </div>
+  <div id="mSum" class="cards"></div>
+  <div id="mGrid" class="mgrid"></div>
+  <p class="note">Gecraftet heißt: Die Stufe taucht in deinen gecrafteten Minions auf. Requirement, Zutaten (Stufe I) und das „Hinzugefügt“-Datum liest die Seite aus der SkyBlock-Wiki (hypixelskyblock.minecraft.wiki), die Collection-Stufe in Klammern ist deine aktuelle aus der Hypixel-API. Die Craft-Kosten sind eine Schätzung mit den aktuellen Bazaar-Kaufpreisen. Zutaten, die es nicht im Bazaar gibt, zählen nicht mit („ab“). Beim ersten Mal lädt die Seite die Wiki-Seiten der fehlenden Minions und merkt sie sich eine Woche.</p>
+</section>
+
+<!-- ============ RUBRIK: PROFIL ============ -->
+<section id="vProfile" class="hide">
+  <p class="sub">Dein Geld, Verlauf, Skills und Stats, direkt aus der offiziellen Hypixel-API.</p>
+  <details class="sec" id="setup" style="--ac:#6cc3ff"><summary>Zugang</summary><div class="sb">
+    <div class="prow">
+      <label>Minecraft-Name<input id="uname" type="text" autocomplete="off"></label>
+      <label>Hypixel-API-Key (optional)<input id="apikey" type="password" autocomplete="off" placeholder="Key einfügen"></label>
+      <label>UUID (optional)<input id="uuid" type="text" autocomplete="off" placeholder="wird automatisch gesucht"></label>
+      <button id="loadP">Laden</button>
+      <a id="scLink" class="btn" target="_blank" rel="noopener">SkyCrypt öffnen</a>
+    </div>
+    <p class="note" style="margin-top:10px">Mit Key liest die Seite dein Profil zuerst von Hypixel (Purse, Bank, Skills, Stats, Minions) und holt von SkyCrypt zusätzlich den Networth und weitere Extras. Ohne Key (oder wenn Hypixel nicht klappt) nutzt sie nur SkyCrypt. Den gibt es kostenlos im <a href="https://developer.hypixel.net/dashboard" target="_blank" rel="noopener" style="color:var(--gold)">Hypixel Developer Dashboard</a>. Er bleibt in diesem Browser. Fragen müssen teils über öffentliche Proxys laufen, die dann mitlesen können, nimm deshalb nur einen Entwicklungs-Key.</p>
+  </div></details>
+  <div id="pStatus" class="status" style="margin-top:12px"></div>
+  <div id="pTabs" class="prow" style="margin-bottom:8px"></div>
+  <div class="pcol">
+    <div id="pMoney"></div>
+    <details class="sec" style="--ac:#e9b44c"><summary>Geld-Verlauf</summary><div class="sb" id="hist"><div class="perk">Lade Profil, um den Verlauf zu sehen.</div></div></details>
+    <details class="sec" style="--ac:#5fd38d"><summary>Skills</summary><div class="sb" id="skills"></div></details>
+    <details class="sec" style="--ac:#b58cff"><summary>Stats</summary><div class="sb" id="stats"></div></details>
+    <details class="sec" id="manual" style="--ac:#8a99a6"><summary>Alternative: SkyCrypt-Daten einfügen</summary><div class="sb">
+      <p class="note" style="margin-top:0">Falls das automatische Laden nicht klappt: <a id="apiLink" target="_blank" rel="noopener" style="color:var(--gold)">SkyCrypt-Seite öffnen</a>, mit Strg+U den Quelltext aufrufen, alles markieren (Strg+A), kopieren und hier einfügen. Daraus liest die Seite Purse, Bank, Networth, Skills, Dungeons und Slayer. Das geht auch jeden Tag in zehn Sekunden, wenn du den Verlauf pflegen willst.</p>
+      <textarea id="pasteBox" placeholder="JSON oder Quelltext hier einfügen"></textarea>
+      <button id="pasteBtn" style="margin-top:8px">Einfügen und anzeigen</button>
+    </div></details>
+  </div>
+</section>
+</main>
+
+<script src="furfsky-icons.js" onerror="void 0"></script>
+<script>
+const $ = id => document.getElementById(id);
+const PROXIES = [u=>u, u=>"https://corsproxy.io/?url="+encodeURIComponent(u), u=>"https://api.allorigins.win/raw?url="+encodeURIComponent(u)];
+async function getJson(url, ok){
+  const errs = [];
+  for(const [i,wrap] of PROXIES.entries()){
+    try{
+      const res = await fetch(wrap(url),{cache:"no-store"});
+      if(!res.ok) throw new Error("HTTP "+res.status);
+      const d = await res.json();
+      if(!ok || ok(d)) return d;
+      throw new Error("Unerwartete Antwort");
+    }catch(e){ errs.push((i?"Proxy "+i:"direkt")+": "+e.message); }
+  }
+  throw new Error(errs.join(" | "));
+}
+const store = {get:k=>{try{return localStorage.getItem(k)||""}catch(e){return ""}}, set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}}};
+
+/* ---------- Passwortschutz: nur ein Sichtschutz, keine echte Sicherheit (der Code liegt ja offen im Browser) ---------- */
+function sha256(str){
+  const u=unescape(encodeURIComponent(str)), K=[], H=[];
+  for(let c=2;K.length<64;c++){ let p=true; for(let d=2;d*d<=c;d++) if(c%d===0){ p=false; break; } if(p){ K.push(Math.floor((Math.cbrt(c)%1)*4294967296)); if(H.length<8) H.push(Math.floor((Math.sqrt(c)%1)*4294967296)); } }
+  const b=[]; for(let i=0;i<u.length;i++) b.push(u.charCodeAt(i));
+  const bl=b.length*8; b.push(0x80); while(b.length%64!==56) b.push(0);
+  for(let i=7;i>=0;i--) b.push(i>=4?0:(bl>>>(i*8))&255);
+  const rr=(v,a)=>(v>>>a)|(v<<(32-a));
+  for(let o=0;o<b.length;o+=64){
+    const w=[]; for(let t=0;t<16;t++) w[t]=(b[o+4*t]<<24)|(b[o+4*t+1]<<16)|(b[o+4*t+2]<<8)|b[o+4*t+3];
+    for(let t=16;t<64;t++){ const s0=rr(w[t-15],7)^rr(w[t-15],18)^(w[t-15]>>>3), s1=rr(w[t-2],17)^rr(w[t-2],19)^(w[t-2]>>>10); w[t]=(w[t-16]+s0+w[t-7]+s1)|0; }
+    let [a,bb,c,d,e,f,g,h]=H;
+    for(let t=0;t<64;t++){
+      const S1=rr(e,6)^rr(e,11)^rr(e,25), ch=(e&f)^(~e&g), t1=(h+S1+ch+K[t]+w[t])|0;
+      const S0=rr(a,2)^rr(a,13)^rr(a,22), mj=(a&bb)^(a&c)^(bb&c), t2=(S0+mj)|0;
+      h=g; g=f; f=e; e=(d+t1)|0; d=c; c=bb; bb=a; a=(t1+t2)|0;
+    }
+    H[0]=(H[0]+a)|0; H[1]=(H[1]+bb)|0; H[2]=(H[2]+c)|0; H[3]=(H[3]+d)|0; H[4]=(H[4]+e)|0; H[5]=(H[5]+f)|0; H[6]=(H[6]+g)|0; H[7]=(H[7]+h)|0;
+  }
+  return H.map(x=>(x>>>0).toString(16).padStart(8,"0")).join("");
+}
+
+const PW_HASH="68a8cc4a03cf9feffaf8e67a89cab2b3d4e3679745668d9c7f7ff4464e0f3ad3";   // SHA-256 von „dieWebsite|<Passwort>“
+let LOCKED=true;
+try{ if(sessionStorage.getItem("unlocked")==="1") LOCKED=false; }catch(e){}
+function setLocked(l){
+  LOCKED=l; $("lock").classList.toggle("hide",!l); document.querySelector("main").inert=l;
+  if(l) setTimeout(()=>$("lockPw").focus(),0);
+}
+$("lockForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  if(sha256("dieWebsite|"+$("lockPw").value)===PW_HASH){
+    try{ sessionStorage.setItem("unlocked","1"); }catch(x){}
+    $("lockPw").value=""; $("lockErr").textContent=""; setLocked(false); if(typeof gateRefresh==="function") gateRefresh();
+  } else { $("lockErr").textContent="Falsches Passwort."; $("lockPw").select(); }
+});
+setLocked(LOCKED);
+
+/* ---------- Icons ---------- */
+const CDN = "https://cdn.jsdelivr.net/gh/PrismarineJS/minecraft-assets@master/data/1.20.2/";
+const LEGACY = {SULPHUR:"gunpowder",INK_SACK:"ink_sac",RAW_FISH:"cod",RAW_CHICKEN:"chicken",PORK:"porkchop",RAW_BEEF:"beef",CARROT_ITEM:"carrot",POTATO_ITEM:"potato",MELON:"melon_slice",NETHER_STALK:"nether_wart",LOG:"oak_log",LOG_2:"acacia_log",EYE_OF_ENDER:"ender_eye",SNOW_BALL:"snowball",SKULL_ITEM:"player_head",WOOD:"oak_planks",SEEDS:"wheat_seeds",CLAY_BALL:"clay_ball",EXP_BOTTLE:"experience_bottle",WATER_LILY:"lily_pad",DOUBLE_PLANT:"sunflower",STAINED_CLAY:"white_terracotta",ENDER_STONE:"end_stone",MUSHROOM_COLLECTION:"red_mushroom",RED_ROSE:"poppy",YELLOW_FLOWER:"dandelion"};
+let ITEMS = {};
+function headUrl(skin){
+  try{ return JSON.parse(atob(skin)).textures.SKIN.url.replace("http://","https://"); }catch(e){ return ""; }
+}
+function furfKey(id){
+  const K = window.FURF && window.FURF.k; if(!K) return null;
+  const l = id.toLowerCase();
+  const c = [l, l.replace(/^enchanted_/,""), l.replace(/^enchanted_/,"")+"_item", l.replace(/_item$|_block$|_cube$/,""), l.replace(/^raw_/,""), l.replace(/s$/,""), l+"s", l.replace(/^enchantment_/,""), l.replace(/^essence_/,"")+"_essence"];
+  const hit = c.find(x=>K[x]!==undefined);
+  return hit===undefined ? null : K[hit];
+}
+function icon(id){
+  const fi = furfKey(id);
+  if(fi!==null) return `<img class="ic" alt="" src="data:image/png;base64,${window.FURF.t[fi]}">`;
+  const it = ITEMS[id];
+  if(it && it.skin){
+    let u = headUrl(it.skin);
+    if(u){
+      const sk = window.FURF && window.FURF.s && window.FURF.s[u.split("/").pop()];
+      if(sk) u = "data:image/png;base64,"+sk;
+      return `<span class="head" style="--u:url('${u}')"></span>`;
+    }
+  }
+  let m = it ? String(it.material) : (id.startsWith("ENCHANTMENT_") ? "ENCHANTED_BOOK" : id);
+  m = LEGACY[m] || m.toLowerCase();
+  return `<img class="ic" loading="lazy" alt="" data-m="${m}" data-l="${id[0]}" src="${CDN}items/${m}.png" onerror="imgFail(this)">`;
+}
+function imgFail(el){
+  if(!el.dataset.t){ el.dataset.t = 1; el.src = CDN+"blocks/"+el.dataset.m+".png"; return; }
+  el.outerHTML = `<span class="ph">${el.dataset.l}</span>`;
+}
+
+/* ---------- Flips ---------- */
+const API = "https://api.hypixel.net/v2/skyblock/bazaar";
+const COLS = [["rank","#"],["name","Item"],["buy","Kaufen (Order)"],["sell","Verkaufen (Order)"],["profit","Gewinn/Stück"],["roi","Marge"],["vol","Volumen/Woche"],["hourly","Gewinn/Std"],["score","Score"]];
+let rows = [], sortKey = "score", sortDir = -1;
+const fmt = n => n >= 1e9 ? (n/1e9).toFixed(2)+"B" : n >= 1e6 ? (n/1e6).toFixed(2)+"M" : n >= 1e3 ? (n/1e3).toFixed(1)+"k" : n.toFixed(1);
+const pretty = id => id.replace(/^ENCHANTMENT_/,"Ench. ").replace(/_/g," ").toLowerCase().replace(/\b\w/g,c=>c.toUpperCase());
+
+const WIKI="https://hypixelskyblock.minecraft.wiki/w/";
+function wk(t,page,hash){ return `<a class="wk" href="${WIKI}${encodeURIComponent((page||t).replace(/ /g,"_"))}${hash?"#"+hash:""}" target="_blank" rel="noopener">${t}</a>`; }
+const REG_MAYORS=["Aatrox","Cole","Diana","Diaz","Finnegan","Foxy","Marina","Paul"];
+const MAYOR_PAGE={"Jerry":"Mayor_Jerry","Aura":"Candidate_Aura","Barry":"Candidate_Barry","Nancy":"Mayor_Nancy","Faith":"Mayor_Faith","Technoblade":"Resistance_Leader"};
+const mayorPage=n=>MAYOR_PAGE[n]||n, mayorAnchor=n=>REG_MAYORS.includes(n)?"Mayoral_Perks":"";
+const itemLink = r => r.id.startsWith("ENCHANTMENT_") ? r.name : `<a class="wk" href="${WIKI}Special:Search?search=${encodeURIComponent(r.name)}&go=Go" target="_blank" rel="noopener">${r.name}</a>`;
+const WIKI_EV = {"Dark Auction":"Dark_Auction","Spooky Festival":"Spooky_Festival","Jerry's Workshop offen":"Jerry's_Workshop"};
+const BOOK = {};
+function build(data){
+  const tax = +$("tax").value/100, out = [];
+  for(const p of Object.values(data.products)){
+    const q = p.quick_status;
+    BOOK[p.product_id] = {bid: p.sell_summary[0]?.pricePerUnit, ask: p.buy_summary[0]?.pricePerUnit};
+    const buy = q.sellPrice + 0.1, sell = q.buyPrice - 0.1;
+    if(!(buy > 0) || !(sell > buy)) continue;
+    const profit = sell*(1-tax) - buy;
+    if(profit <= 0) continue;
+    const vol = Math.min(q.sellMovingWeek, q.buyMovingWeek);
+    const roi = profit/buy*100, hourly = profit*(vol/168)*0.05;
+    const roiF = roi > 20 ? 1/(1+(roi-20)/20) : 1;
+    const depthF = Math.min(1, Math.min(q.buyOrders, q.sellOrders)/30);
+    out.push({id:p.product_id,name:pretty(p.product_id),buy,sell,profit,roi,vol,hourly,raw:hourly*roiF*depthF});
+  }
+  const top = Math.max(...out.map(r=>r.raw), 1);
+  out.forEach(r=>r.score = Math.round(r.raw/top*100));
+  out.sort((a,b)=>b.raw-a.raw).forEach((r,i)=>r.rank=i+1);
+  return out;
+}
+function visible(){
+  const on = $("master").checked, q = $("q").value.toLowerCase();
+  return rows.filter(r => (!on || (
+    (!$("onVol").checked || r.vol>=+$("minVol").value) &&
+    (!$("onMin").checked || r.buy>=+$("minPrice").value) &&
+    (!$("onMax").checked || r.buy<=+$("maxPrice").value) &&
+    (!$("onRoi").checked || r.roi<=+$("maxRoi").value))) && r.name.toLowerCase().includes(q));
+}
+function render(){
+  $("fbody").classList.toggle("closed", !$("master").checked); $("fbody").inert = !$("master").checked;
+  document.querySelectorAll(".ctl label:not(.master) input[type=number]").forEach(i=>i.disabled=!$("master").checked);
+  const all = visible();
+  const b = all.slice().sort((x,y)=>x.rank-y.rank)[0];
+  $("best").innerHTML = b ? `<div class="best">${icon(b.id)}<div><div class="k">Bester Flip im Moment</div><h2>${itemLink(b)}</h2></div>
+    <div class="stats"><div><div class="k">Kauforder</div><div class="v">${fmt(b.buy)}</div></div>
+    <div><div class="k">Verkaufsorder</div><div class="v">${fmt(b.sell)}</div></div>
+    <div><div class="k">Gewinn/Stück</div><div class="v" style="color:var(--gain)">${fmt(b.profit)} (${b.roi.toFixed(1)} %)</div></div>
+    <div><div class="k">Gewinn/Std (Schätzung)</div><div class="v" style="color:var(--gain)">${fmt(b.hourly)}</div></div></div></div>` : "";
+  const list = all.sort((a,b)=> (typeof a[sortKey]==="string" ? a[sortKey].localeCompare(b[sortKey]) : a[sortKey]-b[sortKey]) * (sortKey==="rank"?-sortDir:sortDir)).slice(0,100);
+  $("head").innerHTML = COLS.map(([k,l])=>`<th tabindex="0" data-k="${k}" class="${k===sortKey?'on':''}">${l}${k===sortKey?(sortDir<0?' ▼':' ▲'):''}</th>`).join("");
+  $("body").innerHTML = list.length ? list.map(r=>`<tr><td class="rk">${r.rank}</td>
+    <td><div class="it">${icon(r.id)}${itemLink(r)}</div></td><td>${fmt(r.buy)}</td><td>${fmt(r.sell)}</td>
+    <td class="p">${fmt(r.profit)}</td><td>${r.roi.toFixed(1)} %</td><td>${fmt(r.vol)}</td>
+    <td class="p">${fmt(r.hourly)}</td><td><span class="score">${r.score}</span></td></tr>`).join("")
+    : `<tr><td colspan="9">Keine Treffer. Schalte Filter aus oder lockere sie.</td></tr>`;
+}
+async function load(){
+  try{
+    rows = build(await getJson(API, d=>d.success));
+    $("status").className="status";
+    $("status").textContent = "Stand: "+new Date().toLocaleTimeString("de-DE")+" · "+rows.length+" Items mit positiver Marge";
+    render(); renderOrders(); updateGlance();
+  }catch(e){
+    $("status").className="status err";
+    $("status").textContent = "Daten konnten nicht geladen werden ("+e.message+"). Nächster Versuch in 30 Sekunden.";
+  }
+}
+async function loadItems(){
+  try{
+    const d = await getJson("https://api.hypixel.net/v2/resources/skyblock/items", d=>d.success);
+    d.items.forEach(i=>ITEMS[i.id]=i);
+    render(); updateGlance(); if(MIN) renderMinions();
+  }catch(e){ /* Icons fallen auf Materialnamen bzw. Platzhalter zurück */ }
+}
+$("head").addEventListener("click",e=>{
+  const k=e.target.closest("th")?.dataset.k; if(!k) return;
+  sortDir = k===sortKey ? -sortDir : (k==="name"||k==="rank"?1:-1); sortKey=k; render();
+});
+$("head").addEventListener("keydown",e=>{ if(e.key==="Enter") e.target.click(); });
+document.querySelectorAll(".ctl input").forEach(i=>i.addEventListener("input",()=>{ i.id==="tax" ? load() : render(); }));
+
+/* ---------- Meine Orders (manuell) ---------- */
+let ORDERS = []; try{ ORDERS = JSON.parse(store.get("orders")||"[]"); }catch(e){}
+const saveOrders = ()=>store.set("orders", JSON.stringify(ORDERS));
+function resolveId(txt){
+  const t = txt.trim().toLowerCase();
+  return Object.keys(BOOK).find(id=>id.toLowerCase()===t.replace(/ /g,"_") || pretty(id).toLowerCase()===t);
+}
+function renderOrders(){
+  $("oList").innerHTML = Object.keys(BOOK).map(id=>`<option value="${pretty(id)}">`).join("");
+  $("ordList").innerHTML = ORDERS.length ? ORDERS.map((o,i)=>{
+    const b = BOOK[o.id] || {}, buy = o.type==="buy";
+    const ref = buy ? b.bid : b.ask;
+    let st = '<span class="st">kein Marktpreis</span>', hint = "";
+    if(ref!==undefined){
+      const worse = buy ? ref > o.price+1e-9 : ref < o.price-1e-9, same = Math.abs(ref-o.price)<1e-9;
+      st = worse ? `<span class="st bad">${buy?"überboten":"unterboten"}</span>` : same ? '<span class="st eq">gleichauf</span>' : '<span class="st ok">an der Spitze</span>';
+      hint = `${buy?"Höchstes Gebot":"Niedrigstes Angebot"}: ${fmt(ref)}` + (worse ? ` · neu setzen: ${fmt(buy?ref+0.1:ref-0.1)}` : "");
+    }
+    return `<div class="ord"><b>${pretty(o.id)}</b><span>${buy?"Kauf":"Verkauf"} zu ${fmt(o.price)} ${st}</span><span class="k">${hint}</span><button data-i="${i}">Entfernen</button></div>`;
+  }).join("") : '<p class="k">Noch keine Orders. Trage deine aktiven Orders ein, dann siehst du, ob sie über- oder unterboten wurden.</p>';
+}
+$("ordForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const id = resolveId($("oItem").value);
+  if(!id){ $("oItem").setCustomValidity("Item nicht gefunden"); $("oItem").reportValidity(); return; }
+  $("oItem").setCustomValidity("");
+  ORDERS.push({id, type:$("oType").value, price:+$("oPrice").value}); saveOrders();
+  $("oItem").value=""; $("oPrice").value=""; renderOrders();
+});
+$("ordList").addEventListener("click",e=>{ const i=e.target.dataset.i; if(i===undefined) return; ORDERS.splice(+i,1); saveOrders(); renderOrders(); });
+
+/* ---------- Start: Auf einen Blick ---------- */
+function glancePts(pid,key){ const h=HIST[pid]||{}; return Object.keys(h).sort().filter(d=>sane(h[d][key])!==null).map(d=>({d,v:h[d][key]})); }
+function updateGlance(){
+  const b = visible().sort((x,y)=>x.rank-y.rank)[0];
+  $("gBest").innerHTML = b ? `<div class="it">${icon(b.id)}<div><b>${itemLink(b)}</b><div class="k">Ca. ${fmt(b.hourly)} Gewinn/Std · Marge ${b.roi.toFixed(1)} %</div></div></div>` : '<div class="perk">Lade Daten …</div>';
+  const pid=store.get("lastpid");
+  const f=(key,el,txt)=>{ const p=pid?glancePts(pid,key):[]; $(el).innerHTML = p.length ? `<div style="font-size:22px;font-weight:700;color:var(--tx)">${fmtBig(p[p.length-1].v)}</div>${delta(p,fmtBig)}` : `<div class="perk">${txt}</div>`; };
+  f("m","gMoney","Noch keine Daten. Lade dein Profil im Profil-Bereich.");
+  f("n","gNw","Noch keine Daten.");
+}
+
+/* ---------- Seitenleiste: Zeit, Mayor, Events, Bingo ---------- */
+const EPOCH = 1560275700, YEAR = 446400, DAY = 1200;
+const MONTHS = ["Early Spring","Spring","Late Spring","Early Summer","Summer","Late Summer","Early Autumn","Autumn","Late Autumn","Early Winter","Winter","Late Winter"];
+const dur = ms => { let s=Math.max(0,Math.floor(ms/1000)); const d=Math.floor(s/86400); s%=86400; const h=Math.floor(s/3600); s%=3600; const m=Math.floor(s/60);
+  return (d?d+" T ":"")+(h||d?h+" Std ":"")+m+" Min "+(s%60)+" s"; };
+const when = sec => new Date(sec*1000).toLocaleString("de-DE",{weekday:"short",day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"});
+// Nächstes/aktuelles Vorkommen eines jährlichen Events: Monat (0-11), erster Tag, Anzahl Tage
+function yearly(now, month, day, days){
+  const rel = now-EPOCH, y = Math.floor(rel/YEAR);
+  for(const yy of [y, y+1]){
+    const start = EPOCH + yy*YEAR + (month*31+day-1)*DAY, end = start + days*DAY;
+    if(now < end) return {start,end,live: now>=start};
+  }
+}
+const chip=(t,bg,fg)=>`<span class="chip" style="background:${bg};color:${fg}">${t}</span>`;
+const EVC={"Dark Auction":["#4a2f17","#f1d9b5"],"Spooky Festival":["#d9701b","#fff"],"Jerry's Workshop offen":["#b8323d","#fff"]};
+function tick(){
+  const now = Date.now()/1000, rel = now-EPOCH;
+  const yr = Math.floor(rel/YEAR)+1, dIdx = Math.floor((rel%YEAR)/DAY), mo = Math.floor(dIdx/31), dd = dIdx%31+1;
+  const hrs = (rel%DAY)/DAY*24, hh = Math.floor(hrs), mm = Math.floor((hrs-hh)*60);
+  $("sbTime").textContent = `${String(hh).padStart(2,"0")}:${String(mm).padStart(2,"0")}`;
+  $("sbSeason").textContent = `Jahr ${yr} · ${MONTHS[mo]} ${dd}.`;
+  const da = EPOCH + Math.ceil(rel/3600)*3600;
+  const rows = [["Dark Auction", `in ${dur((da-now)*1000)}`, false]];
+  [["Spooky Festival",7,29,3],["Jerry's Workshop offen",11,1,31]].forEach(([n,m,d,len])=>{
+    const e = yearly(now,m,d,len);
+    rows.push([n, e.live ? `läuft, noch ${dur((e.end-now)*1000)}` : `in ${dur((e.start-now)*1000)}`, e.live]);
+  });
+  $("events").innerHTML = rows.map(([n,t,l])=>`<div>${chip(wk(n,WIKI_EV[n]),...(EVC[n]||["#243342","#e7ecef"]))}</div><div class="perk ${l?'live':''}" style="margin-bottom:6px">${t}</div>`).join("") +
+    '<div class="perk">Jacob\'s Contest und Dark Auction kommen alle 3 SkyBlock-Tage (etwa stündlich).</div>';
+  renderBingo();
+}
+let BINGO = null;
+function renderBingo(){
+  if(BINGO===undefined) return;
+  if(!BINGO){ $("bingo").textContent="Lade …"; return; }
+  const now = Date.now(), b = BINGO;
+  let html = `<div>${chip(wk(b.name||"Bingo","Bingo"),"#f2c200","#1a1500")}</div>`;
+  if(now < b.start) html += `<div>Startet in ${dur(b.start-now)}</div>`;
+  else if(now <= b.end) html += `<div class="live">Läuft, noch ${dur(b.end-now)}</div>`;
+  else {
+    const n = new Date(); const next = new Date(n.getFullYear(), n.getMonth()+1, 1);
+    html += `<div>Zuletzt beendet: ${new Date(b.end).toLocaleDateString("de-DE")}</div><div style="margin-top:4px">Nächstes Bingo: voraussichtlich ab ${next.toLocaleDateString("de-DE")}, in ${dur(next-now)}</div>`;
+  }
+  $("bingo").innerHTML = html;
+}
+async function loadInfo(){
+  try{
+    const d = await getJson("https://api.hypixel.net/v2/resources/skyblock/election", d=>d.success);
+    const m = d.mayor, mi = m.minister;
+    const perks = (m.perks||[]).map(p=>wk(p.name,mayorPage(m.name),mayorAnchor(m.name))).join(", ");
+    $("mayor").innerHTML = `<div class="row"><b class="big" style="color:var(--gold)">${wk(m.name,mayorPage(m.name))}</b></div><div>${perks}</div>` +
+      (mi ? `<div style="margin-top:8px">${chip("Minister: "+wk(mi.name,mayorPage(mi.name)),"#6b4fa0","#fff")}</div><div>${mi.perk&&mi.perk.name?wk(mi.perk.name,mayorPage(mi.name),mayorAnchor(mi.name)):""}</div>` : "") +
+      (d.current ? `<div style="margin-top:8px" class="live">Wahl läuft gerade</div>` : "");
+  }catch(e){ $("mayor").textContent = "Konnte Mayor nicht laden ("+e.message+")"; }
+  try{
+    const d = await getJson("https://api.hypixel.net/v2/resources/skyblock/bingo", d=>d.success);
+    BINGO = {name:d.name, start:+d.start, end:+d.end};
+  }catch(e){ BINGO = undefined; $("bingo").textContent = "Konnte Bingo nicht laden ("+e.message+")"; }
+  renderBingo();
+}
+
+/* ---------- Profil ---------- */
+const SK_T=[50,125,200,300,500,750,1000,1500,2000,3500,5000,7500,10000,15000,20000,30000,50000,75000,100000,200000,300000,400000,500000,600000,700000,800000,900000,1000000,1100000,1200000,1300000,1400000,1500000,1600000,1700000,1800000,1900000,2000000,2100000,2200000,2300000,2400000,2500000,2600000,2750000,2900000,3100000,3400000,3700000,4000000,4300000,4600000,4900000,5200000,5500000,5800000,6100000,6400000,6700000,7000000];
+const CA_T=[50,75,110,160,230,330,470,670,950,1340,1890,2665,3760,5260,7380,10300,14400,20000,27600,38000,52500,71500,97000,132000,180000,243000,328000,445000,600000,800000,1065000,1410000,1900000,2500000,3300000,4300000,5600000,7200000,9200000,12000000,15000000,19000000,24000000,30000000,38000000,48000000,60000000,75000000,93000000,116250000];
+function lvlOf(xp,table,cap){
+  let rest=xp,lvl=0;
+  for(let i=0;i<Math.min(table.length,cap);i++){
+    if(rest>=table[i]){rest-=table[i];lvl++;} else return {lvl,prog:rest/table[i]};
+  }
+  return {lvl,prog:1};
+}
+const fmtBig=n=>n===null||n===undefined?"–":Math.abs(n)>=1e9?(n/1e9).toFixed(2)+"B":Math.abs(n)>=1e6?(n/1e6).toFixed(2)+"M":Math.abs(n)>=1e3?(n/1e3).toFixed(1)+"k":String(Math.round(n));
+function niceStep(range,count){ const raw=range/count, p=Math.pow(10,Math.floor(Math.log10(raw))), f=raw/p; return (f<=1?1:f<=2?2:f<=2.5?2.5:f<=5?5:10)*p; }
+function axisFmt(step,mx){
+  const u=Math.abs(mx)>=1e9?[1e9,"B"]:Math.abs(mx)>=1e6?[1e6,"M"]:Math.abs(mx)>=1e3?[1e3,"k"]:[1,""];
+  const dec=Math.min(4,Math.max(0,Math.ceil(-Math.log10(step/u[0])-1e-9)));
+  return v=>(v/u[0]).toFixed(dec)+u[1];
+}
+function chart(pts,fm){
+  if(pts.length<2) return `<div class="perk">${pts.length?"Erster Messpunkt gespeichert ("+fm(pts[0].v)+"). Die Linie erscheint, sobald du an einem weiteren Tag die Seite öffnest.":"Noch keine Daten."}</div>`;
+  const W=640,H=200,L=76,R=16,T=18,B=158,n=pts.length;
+  const vs=pts.map(p=>p.v); let mn=Math.min(...vs),mx=Math.max(...vs); if(mn===mx){ const e=Math.max(Math.abs(mn)*0.01,1); mn-=e; mx+=e; }
+  const pad=(mx-mn)*0.12; mn-=pad; mx+=pad;
+  const X=i=>L+i*(W-L-R)/(n-1), Y=v=>B-(v-mn)/(mx-mn)*(B-T);
+  const up=vs[n-1]>=vs[0], col=up?"#5fd38d":"#e5736b";
+  const step=niceStep(mx-mn,4), af=axisFmt(step,Math.max(Math.abs(mn),Math.abs(mx)));
+  const ticks=[]; for(let v=Math.ceil(mn/step)*step; v<=mx+step*1e-6; v+=step) ticks.push(v);
+  const line=pts.map((p,i)=>X(i).toFixed(1)+","+Y(p.v).toFixed(1)).join(" ");
+  const area=`${X(0)},${B} ${line} ${X(n-1)},${B}`;
+  const dl=d=>d.slice(8,10)+"."+d.slice(5,7)+".";
+  const idx=[0,Math.floor((n-1)/2),n-1].filter((v,i,a)=>a.indexOf(v)===i);
+  const y0=Y(vs[0]).toFixed(1), yl=Y(vs[n-1]);
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Verlauf" style="width:100%;height:auto"><g font-size="11" fill="#8a99a6">
+  ${ticks.map(v=>`<line x1="${L}" x2="${W-R}" y1="${Y(v).toFixed(1)}" y2="${Y(v).toFixed(1)}" stroke="#2a3b4d" stroke-width="1"/><text x="${L-8}" y="${(Y(v)+4).toFixed(1)}" text-anchor="end">${af(v)}</text>`).join("")}
+  <line x1="${L}" x2="${L}" y1="${T}" y2="${B}" stroke="#3a4f64"/><line x1="${L}" x2="${W-R}" y1="${B}" y2="${B}" stroke="#3a4f64"/>
+  ${idx.map(i=>`<text x="${X(i)}" y="${H-12}" text-anchor="${i===0?"start":i===n-1?"end":"middle"}">${dl(pts[i].d)}</text>`).join("")}</g>
+  <line x1="${L}" x2="${W-R}" y1="${y0}" y2="${y0}" stroke="${col}" stroke-opacity=".55" stroke-dasharray="5 4"/>
+  <polygon points="${area}" fill="${col}" opacity=".12"/><polyline points="${line}" fill="none" stroke="${col}" stroke-width="2.5" stroke-linejoin="round"/>
+  ${pts.map((p,i)=>{ const x=X(i), y=Y(p.v), tw=170, tx=Math.min(Math.max(x-tw/2,4),W-tw-4), ty=y-50<2?y+14:y-50, fd=p.d.slice(8,10)+"."+p.d.slice(5,7)+"."+p.d.slice(0,4);
+    return `<g class="pt" tabindex="0"><circle cx="${x}" cy="${y}" r="12" fill="transparent"/><circle class="dot" cx="${x}" cy="${y}" r="3.5" fill="${col}"/><g class="tip"><rect x="${tx}" y="${ty}" width="${tw}" height="38" fill="#0b0f14" stroke="${col}" stroke-width="1.5"/><text x="${tx+8}" y="${ty+15}" font-size="11" fill="#8a99a6">${fd} · ${fm(p.v)}</text><text x="${tx+8}" y="${ty+31}" font-size="13" font-weight="700" fill="#fff">${Math.round(p.v).toLocaleString("en-US")} Coins</text></g></g>`; }).join("")}
+  <text x="${W-R}" y="${(yl<T+14?yl+16:yl-8).toFixed(1)}" text-anchor="end" font-size="11" font-weight="700" fill="${col}">${fm(vs[n-1])}</text></svg>`;
+}
+function delta(pts,fm){
+  if(pts.length<2) return "";
+  const a=pts[pts.length-2].v,b=pts[pts.length-1].v,d=b-a,pc=a?d/a*100:0;
+  return `<span style="color:${d>=0?"var(--gain)":"var(--bad)"};font-weight:700">${d>=0?"▲ +":"▼ "}${fm(d)} (${pc.toFixed(1)} %)</span> <span class="k">seit dem letzten Messpunkt</span>`;
+}
+
+const SKILLS=[["SKILL_FARMING","Farming",60,"#5fd38d"],["SKILL_MINING","Mining",60,"#6cc3ff"],["SKILL_COMBAT","Combat",60,"#e5736b"],["SKILL_FORAGING","Foraging",54,"#3fd0c9"],["SKILL_FISHING","Fishing",50,"#4f9cf0"],["SKILL_ENCHANTING","Enchanting",60,"#b58cff"],["SKILL_ALCHEMY","Alchemy",50,"#ff9f6b"],["SKILL_TAMING","Taming",50,"#e9b44c"],["SKILL_CARPENTRY","Carpentry",50,"#c49a6c"]];
+const SLAYERS={zombie:"Revenant Horror",spider:"Tarantula Broodfather",wolf:"Sven Packmaster",enderman:"Voidgloom Seraph",blaze:"Inferno Demonlord",vampire:"Riftstalker Bloodfiend"};
+const coin = n => n===null||n===undefined ? "nicht verfügbar" : Math.round(n).toLocaleString("en-US")+" Coins";
+const num = n => n===null||n===undefined ? "–" : Math.round(n).toLocaleString("en-US");
+const today = ()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");};
+let HIST={}; try{ HIST=JSON.parse(store.get("hist")||"{}"); }catch(e){}
+const saveHist=()=>store.set("hist",JSON.stringify(HIST));
+let MODELS=[], CUR=null, profileDone=false, AUTO_NW=false;
+
+function findNum(o, keys, depth=0){
+  if(!o || typeof o!=="object" || depth>8) return null;
+  for(const k of keys){ if(typeof o[k]==="number") return o[k]; }
+  for(const v of Object.values(o)){ const r = findNum(v, keys, depth+1); if(r!==null) return r; }
+  return null;
+}
+function fromText(t){
+  t = t.replace(/&quot;/g,'"').replace(/\\"/g,'"');
+  const g = k => { const m = t.match(new RegExp('(?:^|[^\\w])["\']?'+k+'["\']?\\s*:\\s*(-?[\\d.]+(?:e\\+?\\d+)?)')); return m ? +m[1] : null; };
+  const purse = g("purse"), bank = g("bank"), pb = g("personal_bank");
+  return purse===null && bank===null ? null : {pid:"manuell", cute:"aus Text", current:true, purse, bank, pbank:pb, skills:{}};
+}
+
+async function hx(path,key){
+  const base="https://api.hypixel.net"+path, errs=[];
+  const tries=[
+    ["direkt", ()=>fetch(base,{headers:{"API-Key":key}})],
+    ["direkt (Key in URL)", ()=>fetch(base+"&key="+encodeURIComponent(key))],
+    ["Proxy", ()=>fetch("https://corsproxy.io/?url="+encodeURIComponent(base),{headers:{"API-Key":key}})],
+    ["Proxy (Key in URL)", ()=>fetch("https://corsproxy.io/?url="+encodeURIComponent(base+"&key="+encodeURIComponent(key)))]
+  ];
+  for(const [n,t] of tries){
+    try{
+      const r = await t(); const d = await r.json();
+      if(d && d.success) return d;
+      errs.push(n+": "+((d&&d.cause)||"HTTP "+r.status));
+      if(d && /key/i.test(d.cause||"")) break;   // Key ungültig: weitere Versuche sinnlos
+    }catch(e){ errs.push(n+": "+e.message); }
+  }
+  throw new Error(errs.join(" | "));
+}
+async function mojang(name){
+  const urls=["https://api.mojang.com/users/profiles/minecraft/","https://api.minecraftservices.com/minecraft/profile/lookup/name/"];
+  const errs=[];
+  for(const u of urls){ try{ return await getJson(u+encodeURIComponent(name), d=>d&&d.id); }catch(e){ errs.push(e.message); } }
+  throw new Error("UUID-Suche fehlgeschlagen ("+errs.join(" / ")+"). Trage die UUID unter „Zugang“ von Hand ein (z. B. von namemc.com)");
+}
+function modelOf(p,uuid){
+  const m=(p.members&&p.members[uuid])||{};
+  return {pid:p.profile_id, cute:p.cute_name, current:!!p.selected,
+    purse:m.currencies&&m.currencies.coin_purse!==undefined?m.currencies.coin_purse:null,
+    bank:p.banking&&p.banking.balance!==undefined?p.banking.balance:null,
+    pbank:m.profile&&m.profile.bank_account!==undefined?m.profile.bank_account:null,
+    skills:(m.player_data&&m.player_data.experience)||{}, sbxp:m.leveling?m.leveling.experience:null,
+    slayer:(m.slayer&&m.slayer.slayer_bosses)||{}, cata:m.dungeons&&m.dungeons.dungeon_types&&m.dungeons.dungeon_types.catacombs?m.dungeons.dungeon_types.catacombs.experience:null,
+    souls:m.fairy_soul?m.fairy_soul.total_collected:null, kills:m.player_stats&&m.player_stats.kills?m.player_stats.kills.total:null, deaths:m.player_stats&&m.player_stats.deaths?m.player_stats.deaths.total:null};
+}
+const sane = x => { const v=Number(x); return x!==null&&x!==undefined&&Number.isFinite(v)&&v>=0&&v<1e12 ? v : null; };
+const totalOf = m => (sane(m.purse)||0)+(sane(m.bank)||0)+(sane(m.pbank)||0);
+
+function record(m){
+  if(sane(m.purse)===null && sane(m.bank)===null) return;
+  HIST[m.pid]=HIST[m.pid]||{}; const t=today(); const e={m:totalOf(m)}; if(NWD[t]!==undefined) e.n=NWD[t]; else if(m.nw!==undefined&&m.nw!==null&&sane(m.nw)!==null){ e.n=m.nw; AUTO_NW=true; } HIST[m.pid][t]=Object.assign(HIST[m.pid][t]||{}, e); saveHist();
+}
+let EDITOR_OPEN=false;
+function renderHist(){
+  if(!CUR) return;
+  const h=HIST[CUR.pid]||{}, days=Object.keys(h).sort();
+  const mp=days.filter(d=>sane(h[d].m)!==null).map(d=>({d,v:h[d].m})), np=days.filter(d=>sane(h[d].n)!==null).map(d=>({d,v:h[d].n}));
+  $("hist").innerHTML = `<div class="hh" style="color:var(--gold)">Gesamtes Geld (Purse + Bank), ein Punkt pro Tag</div>${delta(mp,fmtBig)}${chart(mp,fmtBig)}
+    <div class="hh" style="color:#6cc3ff">Networth (automatisch von SkyCrypt, sonst von dir eingetragen)</div>${delta(np,fmtBig)}${chart(np,fmtBig)}
+    <div class="nw"><label>Networth von heute<input id="nwVal" type="number" step="0.01" min="0" style="width:120px"></label>
+    <label>Einheit<select id="nwUnit" style="background:var(--bg);color:var(--tx);border:1px solid var(--line);border-radius:6px;padding:7px"><option value="1e6">M</option><option value="1e9">B</option></select></label>
+    <button id="nwBtn">Speichern</button><button id="histClr">Verlauf löschen</button></div>
+    <details class="sec" id="histEd" style="--ac:#8a99a6;margin-top:12px"><summary>Einträge bearbeiten</summary><div class="sb">
+      <p class="note" style="margin-top:0">Werte in Millionen Coins (M). Feld leeren löscht den Wert, „Tag löschen“ entfernt den ganzen Eintrag. Rot markierte Werte sind unplausibel und werden in den Graphen ausgeblendet.</p>
+      <div style="overflow-x:auto"><table class="ht"><thead><tr><th>Tag</th><th>Geld (M)</th><th>Networth (M)</th><th></th></tr></thead><tbody>${days.slice().reverse().map(d=>`<tr><td>${d.slice(8,10)}.${d.slice(5,7)}.${d.slice(0,4)}</td>${["m","n"].map(k=>`<td><input type="number" step="0.01" data-d="${d}" data-k="${k}" value="${h[d][k]!==undefined?+(h[d][k]/1e6).toFixed(2):""}" style="${h[d][k]!==undefined&&sane(h[d][k])===null?"color:var(--bad);":""}"></td>`).join("")}<td><button data-del="${d}">Tag löschen</button></td></tr>`).join("")}</tbody></table></div>
+    </div></details>
+    <p class="note">Der Networth kommt aus den SkyCrypt-Daten. Klappt das Laden nur über Hypixel, liefert Hypixel keinen Networth, dann trägst du ihn selbst einmal pro Tag ein. Das Geld wird automatisch gespeichert, sobald du das Profil lädst. Die Daten liegen nur in diesem Browser, der Verlauf beginnt mit deinem ersten Laden.</p>`;
+  $("histEd").open=EDITOR_OPEN; $("histEd").addEventListener("toggle",()=>{ EDITOR_OPEN=$("histEd").open; });
+  $("histEd").addEventListener("change",e=>{
+    const el=e.target; if(!el.dataset||!el.dataset.k) return;
+    const d=el.dataset.d, k=el.dataset.k, v=parseFloat(el.value), e2=HIST[CUR.pid][d]; if(!e2) return;
+    if(isNaN(v)){ delete e2[k]; if(k==="n"&&NWD[d]!==undefined){ delete NWD[d]; saveNwd(); } } else { e2[k]=v*1e6; if(k==="n"){ NWD[d]=v*1e6; saveNwd(); } }
+    saveHist(); updateGlance(); renderHist();
+  });
+  $("histEd").addEventListener("click",e=>{
+    const d=e.target.dataset&&e.target.dataset.del; if(!d) return;
+    delete HIST[CUR.pid][d]; if(NWD[d]!==undefined){ delete NWD[d]; saveNwd(); } saveHist(); updateGlance(); renderHist();
+  });
+  $("nwBtn").onclick=()=>{ const v=parseFloat($("nwVal").value); if(!(v>=0)) return; HIST[CUR.pid]=HIST[CUR.pid]||{}; const t=today(); HIST[CUR.pid][t]=Object.assign(HIST[CUR.pid][t]||{}, {n:v*parseFloat($("nwUnit").value)}); NWD[t]=v*parseFloat($("nwUnit").value); saveNwd(); saveHist(); renderHist(); updateGlance(); };
+  $("histClr").onclick=()=>{ if(confirm("Verlauf dieses Profils wirklich löschen?")){ delete HIST[CUR.pid]; saveHist(); renderHist(); updateGlance(); } };
+}
+function renderSkills(m){
+  const ex=m.skills||{};
+  if(!Object.keys(ex).length) return '<div class="perk">Keine Skill-Daten. Aktiviere in Hypixel unter SkyBlock-Menü → Settings → API Settings die Skills-API.</div>';
+  let sum=0;
+  const items=SKILLS.map(([k,n,cap,c])=>{ const xp=ex[k]||0, r=lvlOf(xp,SK_T,cap), full=r.lvl>=cap; sum+=r.lvl+(full?0:r.prog);
+    return `<div class="skill" style="--ac:${c}"><div class="row"><b>${n}</b><span>Lv ${r.lvl}${full?" (max)":""}</span></div><div class="bar"><i style="width:${(full?1:r.prog)*100}%"></i></div><div class="k">${num(xp)} XP</div></div>`; }).join("");
+  return `<div class="perk" style="margin-bottom:10px">Skill-Durchschnitt: <b style="color:var(--gold)">${(sum/SKILLS.length).toFixed(2)}</b> (ohne Runecrafting und Social)</div><div class="grid">${items}</div>`;
+}
+function renderStats(m){
+  const cell=(t,v,c)=>`<div class="skill" style="--ac:${c}"><div class="k">${t}</div><div class="v" style="font-size:18px">${v}</div></div>`;
+  const ca = m.cata===null||m.cata===undefined ? null : lvlOf(m.cata,CA_T,50);
+  const out=[cell("SkyBlock-Level", m.sbxp===null||m.sbxp===undefined?"–":Math.floor(m.sbxp/100), "#e9b44c"),
+    cell("Fairy Souls", num(m.souls), "#b58cff"),
+    cell("Catacombs", ca?`Lv ${ca.lvl}${ca.lvl>=50?"+":""} · ${num(m.cata)} XP`:"–", "#e5736b"),
+    cell("Kills", num(m.kills), "#5fd38d"), cell("Tode", num(m.deaths), "#8a99a6")];
+  Object.entries(SLAYERS).forEach(([k,n])=>{ const x=m.slayer[k]; if(x&&x.xp!==undefined) out.push(cell(wk(n), num(x.xp)+" XP", "#ff9f6b")); });
+  if(m.sc){   // Extras von SkyCrypt
+    if(m.nw!=null) out.push(cell("Networth", fmtBig(m.nw), "#6cc3ff"));
+    if(m.sc.avg!=null) out.push(cell("Skill-Durchschnitt", m.sc.avg, "#5fd38d"));
+    Object.entries(m.sc.classes||{}).forEach(([k,v])=>out.push(cell(cap1(k), "Lv "+v, "#ff9f6b")));
+  }
+  return `<div class="grid">${out.join("")}</div>`;
+}
+function renderModel(m){
+  CUR=m; record(m); if(typeof gateRefresh==="function") gateRefresh();
+  $("pMoney").innerHTML=`<div class="cards">
+    ${[m.purse,m.bank,m.pbank].some(v=>v!=null&&sane(v)===null)?'<div class="status err" style="grid-column:1/-1">Mindestens ein Wert aus den Profildaten wirkt unplausibel und wurde nicht mitgerechnet.</div>':""}
+    <div class="card"><div class="k">Purse</div><div class="big">${coin(sane(m.purse))}</div></div>
+    <div class="card"><div class="k">Bank</div><div class="big">${coin(sane(m.bank))}</div></div>
+    ${m.pbank!==null&&m.pbank!==undefined?`<div class="card"><div class="k">Persönliche Bank</div><div class="big">${coin(sane(m.pbank))}</div></div>`:""}
+    <div class="card"><div class="k">Gesamt</div><div class="big">${coin(totalOf(m))}</div></div></div>`;
+  store.set("lastpid",m.pid); updateGlance(); renderHist(); $("skills").innerHTML=(m.skills&&Object.keys(m.skills).length)||!m.sc?renderSkills(m):renderScSkills(m); $("stats").innerHTML=m.sc&&!m.hx?renderScStats(m):renderStats(m);
+  $("pTabs").innerHTML = MODELS.length>1 ? MODELS.map((x,i)=>`<button data-i="${i}" class="${x===m?"on":""}">${x.cute||"Profil "+(i+1)}</button>`).join("") : "";
+}
+function fromSky(t){
+  t=t.replace(/&quot;/g,'"').replace(/\\"/g,'"').replace(/"([A-Za-z_]+)"\s*:/g,"$1:");
+  const num=re=>{const m=t.match(re);return m?+m[1]:null};
+  const purse=num(/[^\w]purse:(-?[\d.]+)/), bank=num(/[^\w]bank:(-?[\d.]+)/), nw=num(/networth:\{normal:(-?[\d.]+)/);
+  if(purse===null&&bank===null&&nw===null) return null;
+  const pairs=x=>{const o={};(x||"").split(",").forEach(q=>{const [k,v]=q.split(":");if(k&&v!==undefined&&v!==""&&!isNaN(+v))o[k.trim()]=+v});return o};
+  const sk=t.match(/skills:\{skillAverage:([\d.]+),skills:\{([^}]*)\}/), dg=t.match(/dungeoneering:([\d.]+),classAverage:([\d.]+),classes:\{([^}]*)\}/), sl=t.match(/slayers:\{xp:([\d.]+),slayers:\{([^}]*)\}/);
+  return {pid:(t.match(/profile_id:"([\w-]+)"/)||[])[1]||"skycrypt", cute:(t.match(/profile_cute_name:"([^"]+)"/)||[])[1]||"SkyCrypt", current:true, purse, bank, pbank:null, nw, skills:{}, slayer:{},
+    sc:{level:num(/skyblock_level:([\d.]+)/), avg:sk?+sk[1]:null, skills:sk?pairs(sk[2]):null, cata:dg?+dg[1]:null, classAvg:dg?+dg[2]:null, classes:dg?pairs(dg[3]):null, slayerXp:sl?+sl[1]:null, slayers:sl?pairs(sl[2]):null}};
+}
+const SC_CAP={farming:60,mining:60,combat:60,foraging:54,fishing:50,enchanting:60,alchemy:50,taming:50,carpentry:50,runecrafting:25,social:25};
+const SC_COL={farming:"#5fd38d",mining:"#6cc3ff",combat:"#e5736b",foraging:"#3fd0c9",fishing:"#4f9cf0",enchanting:"#b58cff",alchemy:"#ff9f6b",taming:"#e9b44c",carpentry:"#c49a6c",runecrafting:"#d16fe0",social:"#8fd36f",hunting:"#f0c36a"};
+const cap1=x=>x.charAt(0).toUpperCase()+x.slice(1);
+function renderScSkills(m){
+  const sk=m.sc.skills; if(!sk) return '<div class="perk">Keine Skill-Daten im Text gefunden.</div>';
+  const items=Object.entries(sk).map(([k,v])=>{ const cap=SC_CAP[k], c=SC_COL[k]||"#8a99a6";
+    return `<div class="skill" style="--ac:${c}"><div class="row"><b>${cap1(k)}</b><span>Lv ${v}${cap&&v>=cap?" (max)":""}</span></div>${cap?`<div class="bar"><i style="width:${Math.min(100,v/cap*100)}%"></i></div>`:""}</div>`; }).join("");
+  return `<div class="perk" style="margin-bottom:10px">Skill-Durchschnitt: <b style="color:var(--gold)">${m.sc.avg??"–"}</b></div><div class="grid">${items}</div>`;
+}
+function renderScStats(m){
+  const c=m.sc, cell=(t,v,col)=>`<div class="skill" style="--ac:${col}"><div class="k">${t}</div><div class="v" style="font-size:18px">${v}</div></div>`;
+  const out=[cell("SkyBlock-Level",c.level??"–","#e9b44c"), cell("Networth",m.nw!=null?fmtBig(m.nw):"–","#6cc3ff"), cell("Catacombs",c.cata!=null?"Lv "+c.cata+(c.classAvg!=null?" · Klassen Ø "+c.classAvg:""):"–","#e5736b")];
+  Object.entries(c.classes||{}).forEach(([k,v])=>out.push(cell(cap1(k),"Lv "+v,"#ff9f6b")));
+  if(c.slayerXp!=null) out.push(cell("Slayer-XP gesamt",num(c.slayerXp),"#b58cff"));
+  Object.entries(c.slayers||{}).forEach(([k,v])=>out.push(cell(SLAYERS[k]?wk(SLAYERS[k]):cap1(k),"Lv "+v,"#8a99a6")));
+  return `<div class="grid">${out.join("")}</div>`;
+}
+async function scFetch(name){
+  const u="https://sky.shiiyu.moe/stats/"+encodeURIComponent(name), errs=[];
+  const tries=[["direkt",x=>x],["Proxy 1",x=>"https://api.allorigins.win/raw?url="+encodeURIComponent(x)],["Proxy 2",x=>"https://corsproxy.io/?url="+encodeURIComponent(x)],["Proxy 3",x=>"https://api.codetabs.com/v1/proxy?quest="+encodeURIComponent(x)]];
+  for(const [n,f] of tries){
+    try{ const r=await fetch(f(u)); if(!r.ok) throw new Error("HTTP "+r.status); const m=fromSky(await r.text()); if(m) return m; throw new Error("keine Profildaten im Text"); }
+    catch(e){ errs.push(n+": "+e.message); }
+  }
+  throw new Error(errs.join(" | "));
+}
+async function loadProfile(){
+  profileDone=true;
+  const name=$("uname").value.trim(), key=$("apikey").value.trim(); let uuid=$("uuid").value.trim().replace(/-/g,"");
+  $("pStatus").className="status";
+  if(!/^\w{1,16}$/.test(name)){ $("pStatus").className="status err"; $("pStatus").textContent="Bitte einen gültigen Minecraft-Namen eingeben."; return; }
+  store.set("mcname",name); store.set("hkey",key); setMe(name);
+  $("scLink").href="https://sky.shiiyu.moe/stats/"+encodeURIComponent(name); $("apiLink").href=$("scLink").href;
+  $("pStatus").textContent=key?"Lade Profil von Hypixel und SkyCrypt …":"Lade Profil von SkyCrypt …";
+  // Hypixel zuerst (Geld, Skills-XP, Minions), SkyCrypt zusätzlich für Networth und Extras; beide laufen gleichzeitig
+  const hxJob=key?(async()=>{
+    if(!uuid){ uuid=(await mojang(name)).id; $("uuid").value=uuid; }
+    store.set("uuid",uuid);
+    const d=await hx("/v2/skyblock/profiles?uuid="+uuid,key);
+    if(!d.profiles||!d.profiles.length) throw new Error("Keine SkyBlock-Profile gefunden");
+    return d.profiles.map(p=>Object.assign(modelOf(p,uuid),{hx:true}));
+  })():Promise.reject(new Error("kein API-Key eingetragen"));
+  const [hr,sr]=await Promise.allSettled([hxJob,scFetch(name)]);
+  let m=null, src=[];
+  if(hr.status==="fulfilled"){
+    MODELS=hr.value;
+    m=(CUR&&MODELS.find(x=>x.pid===CUR.pid))||MODELS.find(x=>x.current)||MODELS[0];
+    src.push("Hypixel");
+  }
+  if(sr.status==="fulfilled"){
+    const sc=sr.value;
+    if(m){ if(sc.pid===m.pid){ m.nw=sc.nw; m.sc=sc.sc; src.push("SkyCrypt"); } }   // Extras nur, wenn es dasselbe Profil ist
+    else { m=sc; MODELS=[m]; src.push("SkyCrypt"); }
+  }
+  if(!m){
+    $("pStatus").className="status err";
+    $("pStatus").textContent="Automatisches Laden hat nicht geklappt (Hypixel: "+hr.reason.message+" || SkyCrypt: "+sr.reason.message+"). Nutze unten „SkyCrypt-Daten einfügen“.";
+    $("setup").open=true; $("manual").open=true; return;
+  }
+  renderModel(m);
+  const miss=[]; if(hr.status!=="fulfilled"&&key) miss.push("Hypixel nicht erreichbar"); if(sr.status!=="fulfilled") miss.push("SkyCrypt nicht erreichbar"); else if(src.length&&!src.includes("SkyCrypt")) miss.push("SkyCrypt zeigt ein anderes Profil");
+  $("pStatus").textContent="Profil „"+(m.cute||"?")+"“ ("+src.join(" + ")+") · aktualisiert "+new Date().toLocaleTimeString("de-DE")+(miss.length?" · "+miss.join(", "):"");
+  $("setup").open=false;
+}
+function setMe(name){
+  $("me").innerHTML = name ? `<img alt="" src="https://mc-heads.net/avatar/${encodeURIComponent(name)}/48" onerror="this.remove()">${name}` : "Profil";
+}
+const ROUTES={home:"vHome",kalender:"vCal",notepad:"vNotes",ki:"vKi",skyblock:"vStart","skyblock/bazaar":"vFlips","skyblock/minions":"vMinions","skyblock/profil":"vProfile"};
+let CUR_ROUTE="home";
+const OLD_ROUTES={start:"skyblock",bazaar:"skyblock/bazaar",minions:"skyblock/minions",profil:"skyblock/profil"};
+const TITLES={home:"Die Website",kalender:"Kalender",notepad:"Notepad",ki:"KI-Generatoren",skyblock:"Hypixel SkyBlock","skyblock/bazaar":"Bazaar-Flips","skyblock/minions":"Minions","skyblock/profil":"Profil"};
+function view(v){
+  v=OLD_ROUTES[v]||v; if(!ROUTES[v]) v="home";
+  CUR_ROUTE=v;
+  Object.entries(ROUTES).forEach(([k,id])=>$(id).classList.toggle("hide",k!==v));
+  const inSb=v.startsWith("skyblock"), sub=v.indexOf("/")>0;
+  $("hdr").classList.toggle("hide",!inSb);              // Startseite „Die Website“: keine Kopfzeile
+  $("hBack").classList.toggle("hide",v!=="skyblock");   // links „Die Website“ nur auf dem SkyBlock-Hub
+  $("hHub").classList.toggle("hide",!sub);              // Mitte „Hub“ nur in den Unterseiten
+  $("me").classList.toggle("on",v==="skyblock/profil");
+  document.title=TITLES[v]+(v==="home"?"":" | Die Website");
+  window.scrollTo(0,0);
+  if(v==="skyblock/minions"&&!MIN&&typeof loadMinions==="function") loadMinions();
+  if(v==="kalender"&&typeof calRender==="function") calRender();
+  if(v==="home"&&typeof homeTodayRender==="function") homeTodayRender();
+  if(typeof gateRefresh==="function") gateRefresh();   // Tagescheck nur im SkyBlock-Bereich
+}
+window.addEventListener("hashchange",()=>view(location.hash.slice(1)));
+$("me").onclick = ()=>{ location.hash="#skyblock/profil"; };
+$("loadP").onclick = ()=>loadProfile();
+$("uname").addEventListener("keydown",e=>{ if(e.key==="Enter") loadProfile(); });
+$("apikey").addEventListener("keydown",e=>{ if(e.key==="Enter") loadProfile(); });
+$("pTabs").addEventListener("click",e=>{ const i=e.target.dataset.i; if(i===undefined) return; renderModel(MODELS[+i]); });
+$("pasteBtn").onclick = ()=>{
+  const t=$("pasteBox").value; let m=fromSky(t);
+  if(!m){
+    try{
+      const d=JSON.parse(t), list=Object.values(d.profiles||{}), p=list.find(x=>x.current)||list[0];
+      if(p) m={pid:"manuell", cute:p.cute_name||"manuell", current:true, purse:findNum(p,["purse","coin_purse"]), bank:findNum(p,["bank","bank_account"]), pbank:findNum(p,["personal_bank"]), skills:{}, slayer:{}};
+    }catch(e){ m=fromText(t); }
+  }
+  if(m){ m.slayer=m.slayer||{}; MODELS=[m]; renderModel(m); $("pStatus").className="status"; $("pStatus").textContent="Manuell eingefügte Daten · Profil „"+m.cute+"“"; }
+  else { $("pStatus").className="status err"; $("pStatus").textContent="Im Text wurden weder Purse, Bank noch Networth gefunden."; }
+};
+/* ---------- Minion-Collection ---------- */
+const ROMAN=["","I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII"];
+let MIN=null, COLLREQ=null, COLLNAMES={}, WMIN={};
+try{ const c=JSON.parse(store.get("wikimin3")||"{}"); if(c.t&&Date.now()-c.t<7*864e5) WMIN=c.d||{}; }catch(e){}
+const saveWiki=()=>store.set("wikimin3",JSON.stringify({t:Date.now(),d:WMIN}));
+function minionTypes(){
+  const map={};
+  Object.values(ITEMS).forEach(it=>{ if(it.generator){ const g=map[it.generator]=map[it.generator]||{id:it.generator,tiers:0,skin:null,name:null};
+    g.tiers=Math.max(g.tiers,it.generator_tier||0); if(it.generator_tier===1){ g.name=it.name.replace(/\s+I$/,""); g.skin=it.skin; } } });
+  return Object.values(map).filter(g=>g.name);
+}
+function parseColl(d){
+  const req={};
+  for(const cat of Object.values(d.collections||{})) for(const [cid,c] of Object.entries(cat.items||{})){
+    COLLNAMES[String(c.name||cid).toLowerCase()]=cid;
+    for(const t of (c.tiers||[])) for(const u of (t.unlocks||[])){
+      const m=String(u).match(/^(.*?)\s+Minion(?:\s+Recipe)?$/i);
+      if(m){ const k=m[1].trim().toLowerCase(); if(!req[k]||t.tier<req[k].tier) req[k]={cid,cname:c.name||cid,tier:t.tier}; }
+    }
+  }
+  return req;
+}
+const curTier=cid=>{ let m=0; (MIN.tiers||[]).forEach(x=>{ if(x.startsWith(cid+"_")){ const n=+x.slice(cid.length+1); if(n>m) m=n; } }); return m; };
+let NAME2ID=null, NAME2ID_N=-1, NAME2ID_I=-1;
+const nkey=t=>String(t).toLowerCase().replace(/[^a-z0-9]/g,"");
+function recipeCost(w){
+  const items=((w&&w.items)||[]).filter(it=>!/^wooden /i.test(it.name));   // Holz-Werkzeuge zählen nicht
+  if(!items.length) return {cost:null,partial:false,parts:[],missing:[]};
+  const ni=Object.keys(ITEMS).length, nb=Object.keys(BOOK).length;
+  if(!NAME2ID||NAME2ID_N!==nb||NAME2ID_I!==ni){
+    NAME2ID={}; NAME2ID_N=nb; NAME2ID_I=ni;
+    Object.keys(BOOK).forEach(id=>{ NAME2ID[nkey(pretty(id))]=id; if(ITEMS[id]&&ITEMS[id].name) NAME2ID[nkey(ITEMS[id].name)]=id; });   // z. B. MYCEL heißt im Spiel „Mycelium“
+  }
+  let tot=0; const parts=[], missing=[];
+  for(const it of items){
+    parts.push(it.n+"× "+it.name);
+    const id=NAME2ID[nkey(it.name)], b=id&&BOOK[id];
+    if(b&&b.ask!==undefined) tot+=it.n*b.ask; else missing.push(it.name);
+  }
+  const known=parts.length-missing.length;
+  return {cost:known?tot:null,partial:missing.length>0,parts,missing};
+}
+function skinHead(skin){ const u=skin&&headUrl(skin); return u?`<span class="head" style="--u:url('${u}')"></span>`:""; }
+function renderMinions(){
+  const types=minionTypes();
+  if(!types.length){ $("mGrid").innerHTML='<div class="perk">Item-Liste wird geladen …</div>'; return; }
+  if(!MIN){ $("mGrid").innerHTML=""; $("mSum").innerHTML=""; return; }
+  const q=$("mQ").value.toLowerCase(), show=$("mShow").value, sort=$("mSort").value;
+  const rows=types.map(g=>{
+    const crafted=[]; for(let t=1;t<=g.tiers;t++) if(MIN.gens.has(g.id+"_"+t)) crafted.push(t);
+    const w=WMIN[g.id]||null, base=g.name.replace(/\s+Minion$/,"").toLowerCase();
+    let rq=null, guessed=false;
+    if(w&&w.rq){ const cid=COLLNAMES[w.rq.cname.toLowerCase()]; rq={cid:cid||g.id,cname:w.rq.cname,tier:w.rq.tier}; guessed=!cid; }
+    if(!rq){ rq=COLLREQ&&(COLLREQ[base]||COLLREQ[g.id.toLowerCase().replace(/_/g," ")]); guessed=false;
+      if(!rq){ rq={cid:g.id,cname:pretty(g.id),tier:1}; guessed=true; } }
+    const cur=curTier(rq.cid), have=crafted.includes(1), ok=cur>=rq.tier, rc=recipeCost(w);
+    return {g,crafted,rq,guessed,cur,have,ok,cost:rc.cost,partial:rc.partial,parts:rc.parts,added:w&&w.added||null,state:have?2:ok?0:1};
+  });
+  const have=rows.filter(r=>r.have).length, ready=rows.filter(r=>!r.have&&r.ok).length;
+  $("mSum").innerHTML=`<div class="card" style="border-top:3px solid #3fd0c9"><div class="k">Minion-Typen</div><div class="big">${rows.length}</div></div>
+    <div class="card" style="border-top:3px solid var(--gain)"><div class="k">Davon gecraftet</div><div class="big">${have}</div></div>
+    <div class="card" style="border-top:3px solid var(--gold)"><div class="k">Jetzt craftbar (fehlend)</div><div class="big">${ready}</div></div>`;
+  let list=rows.filter(r=>r.g.name.toLowerCase().includes(q) && (show==="all" || (show==="missing"&&!r.have) || (show==="ready"&&!r.have&&r.ok)));
+  const cc=(a,b)=>(a.cost??1e18)-(b.cost??1e18), nn=(a,b)=>(b.added||"").localeCompare(a.added||""), nm=(a,b)=>a.g.name.localeCompare(b.g.name);
+  list.sort(sort==="name"?nm:sort==="cost"?(a,b)=>cc(a,b)||nm(a,b):sort==="new"?(a,b)=>nn(a,b)||cc(a,b)||nm(a,b):(a,b)=>a.state-b.state||cc(a,b)||nm(a,b));
+  const fd=d=>d?d.slice(8,10)+"."+d.slice(5,7)+"."+d.slice(0,4):"";
+  $("mGrid").innerHTML=list.map(r=>{
+    const col=r.have?"#3fd0c9":r.ok?"var(--gain)":"var(--bad)", st=r.have?"Gecraftet":r.ok?"Craftbar":"Gesperrt";
+    const costTxt=r.cost!==null?"Craft "+(r.partial?"ab ":"ca. ")+fmtBig(r.cost)+" Coins":"Kosten unbekannt";
+    return `<div class="mc" style="--ac:${col}"><div class="top">${skinHead(r.g.skin)}<span>${wk(r.g.name)}</span><span class="st2" style="margin-left:auto;color:${col}">${st}</span></div>
+      <div class="pills">${Array.from({length:r.g.tiers},(_,i)=>`<span class="pill ${r.crafted.includes(i+1)?"on":""}">${ROMAN[i+1]||i+1}</span>`).join("")}</div>
+      ${r.have?"":`<div class="rq">Requirement: <b>${r.rq.cname} ${r.rq.tier}</b> <span style="color:${r.ok?"var(--gain)":"var(--bad)"}">(${r.cur})</span>${r.guessed?' <span class="k">geschätzt</span>':""}</div>
+      <div class="k">${costTxt}${r.parts.length?" · "+r.parts.join(", "):""}</div>`}
+      ${r.added?`<div class="k">Hinzugefügt: ${fd(r.added)}</div>`:""}</div>`;
+  }).join("") || '<div class="perk">Nichts gefunden.</div>';
+}
+function parseMinionPage(html){
+  const doc=new DOMParser().parseFromString(html,"text/html");
+  const out={};
+  const txt=(doc.body.textContent||"").replace(/[\u00a0\s]+/g," ");
+  const m=txt.match(/unlocked at ([A-Za-z' ]+?) [IVXL]+ \((\d+)\)/i);
+  if(m) out.rq={cname:m[1].trim(),tier:+m[2]};
+  const tbl=[...doc.querySelectorAll("table")].find(t=>/Total Upgrade Cost/i.test(t.textContent));
+  if(tbl){
+    const row=[...tbl.querySelectorAll("tr")].find(r=>r.children.length>=3&&(r.children[0].textContent||"").trim()==="I");
+    if(row){
+      const cell=(row.children[1].textContent||"").replace(/[\u00a0\s]+/g," ").replace(/\((?:[^()]|\([^()]*\))*\)/g,"");
+      out.items=[...cell.matchAll(/(\d[\d,]*)x\s+([^\d]+?)(?=\s*\d[\d,]*x\s|\s*$)/g)].map(x=>({n:+x[1].replace(/,/g,""),name:x[2].trim()}));
+    }
+  }
+  const h=doc.getElementById("History");
+  if(h){
+    let el=h.closest(".mw-heading")||h.closest("h2")||h;
+    while(el&&el.nextElementSibling){
+      el=el.nextElementSibling; if(/^H2$/.test(el.tagName)) break;
+      const t=el.tagName==="TABLE"?el:(el.querySelector&&el.querySelector("table"));
+      if(t){ const d=(t.textContent||"").match(/([A-Z][a-z]{2}) (\d{1,2}), (\d{4})/); if(d){ const dt=new Date(d[1]+" "+d[2]+", "+d[3]+" UTC"); if(!isNaN(dt)) out.added=dt.toISOString().slice(0,10); } break; }
+    }
+  }
+  return out;
+}
+async function wikiPage(title){
+  for(const b of ["https://hypixelskyblock.minecraft.wiki/api.php","https://hypixelskyblock.minecraft.wiki/w/api.php"]){
+    try{
+      const r=await fetch(b+"?action=parse&format=json&formatversion=2&redirects=1&disableeditsection=1&disablelimitreport=1&prop=text&origin=*&page="+encodeURIComponent(title));
+      if(!r.ok) continue;
+      const j=await r.json();
+      if(j.parse&&j.parse.text) return j.parse.text;
+      if(j.error) return null;      // Seite existiert nicht
+    }catch(e){}
+  }
+  return undefined;                // Wiki nicht erreichbar
+}
+async function fetchWiki(){
+  const todo=minionTypes().filter(g=>!MIN.gens.has(g.id+"_1")&&WMIN[g.id]===undefined);
+  let done=0, fails=0;
+  const status=t=>{ if($("mStatus").className.indexOf("err")<0) $("mStatus").dataset.w=t; };
+  for(let i=0;i<todo.length&&fails<4;i+=4){
+    await Promise.all(todo.slice(i,i+4).map(async g=>{
+      const html=await wikiPage(g.name.replace(/ /g,"_"));
+      if(html===undefined){ fails++; return; }
+      WMIN[g.id]=html?parseMinionPage(html):{}; done++;
+    }));
+    saveWiki(); renderMinions();
+    $("mStatus").textContent=$("mStatus").textContent.split(" · Wiki")[0]+" · Wiki-Daten "+Math.min(i+4,todo.length)+"/"+todo.length;
+  }
+  if(fails>=4) $("mStatus").textContent=$("mStatus").textContent.split(" · Wiki")[0]+" · Wiki nicht erreichbar, Requirements und Kosten sind nur geschätzt";
+  else if(todo.length) $("mStatus").textContent=$("mStatus").textContent.split(" · Wiki")[0]+" · Wiki-Daten vollständig";
+}
+async function loadMinions(){
+  const key=$("apikey").value.trim(), name=$("uname").value.trim(); let uuid=$("uuid").value.trim().replace(/-/g,"");
+  const st=(t,err)=>{ $("mStatus").className="status"+(err?" err":""); $("mStatus").textContent=t; };
+  if(!key){ st("Für die Minion-Collection braucht die Seite deinen Hypixel-API-Key. Trag ihn unter Profil → Zugang ein.",true); return; }
+  st("Lade Minion-Daten …");
+  try{
+    if(!uuid){ uuid=(await mojang(name)).id; $("uuid").value=uuid; store.set("uuid",uuid); }
+    const d=await hx("/v2/skyblock/profiles?uuid="+uuid,key);
+    if(!d.profiles||!d.profiles.length) throw new Error("Keine SkyBlock-Profile gefunden");
+    const prof=(CUR&&d.profiles.find(p=>p.profile_id===CUR.pid))||d.profiles.find(p=>p.selected)||d.profiles[0];
+    const pd=((prof.members||{})[uuid]||{}).player_data||{};
+    if(!pd.crafted_generators) throw new Error("Hypixel liefert für dieses Profil keine Minion-Daten (Collections-API aktiv?)");
+    MIN={gens:new Set(pd.crafted_generators),tiers:pd.unlocked_coll_tiers||[]};
+    try{ COLLREQ=parseColl(await getJson("https://api.hypixel.net/v2/resources/skyblock/collections",x=>x.success)); }catch(e){ COLLREQ=null; }
+    st("Profil „"+(prof.cute_name||"?")+"“ · aktualisiert "+new Date().toLocaleTimeString("de-DE")+(COLLREQ?"":" · Requirements nur geschätzt"));
+    renderMinions(); fetchWiki();
+  }catch(e){ st("Minion-Daten konnten nicht geladen werden: "+e.message,true); }
+}
+["mShow","mSort"].forEach(id=>$(id).addEventListener("change",renderMinions)); $("mQ").addEventListener("input",renderMinions);
+$("mReload").onclick=()=>loadMinions();
+
+/* ---------- Kalender ---------- */
+let CAL={}; try{ CAL=JSON.parse(store.get("cal_v1")||"{}"); }catch(e){}
+const calSave=()=>store.set("cal_v1",JSON.stringify(CAL));
+const p2=n=>String(n).padStart(2,"0");
+const ymd=d=>d.getFullYear()+"-"+p2(d.getMonth()+1)+"-"+p2(d.getDate());
+const calEsc=t=>String(t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const DAYS_DE=["Mo","Di","Mi","Do","Fr","Sa","So"];
+const calEntries=k=>(CAL[k]||[]).slice().sort((a,b)=>(a.time||"").localeCompare(b.time||""));
+const calLong=k=>new Date(k+"T12:00:00").toLocaleDateString("de-DE",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+let calView=new Date(); calView.setDate(1); let calSel=ymd(new Date());
+const HOL_COL={h:"#e5736b",r:"#ff9f6b",o:"#b58cff"};
+function easterOf(y){ const a=y%19,b=Math.floor(y/100),c=y%100,d=Math.floor(b/4),e=b%4,f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3),h=(19*a+b-d-g+15)%30,i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-h-k)%7,m=Math.floor((a+11*h+22*l)/451),mo=Math.floor((h+l-7*m+114)/31),da=((h+l-7*m+114)%31)+1; return new Date(y,mo-1,da); }
+const addDays=(d,n)=>new Date(d.getFullYear(),d.getMonth(),d.getDate()+n);
+const nthWeekday=(y,m,wd,n)=>{ const first=new Date(y,m,1); return new Date(y,m,1+(wd-first.getDay()+7)%7+(n-1)*7); };
+const lastWeekday=(y,m,wd)=>{ const last=new Date(y,m+1,0); return new Date(y,m,last.getDate()-(last.getDay()-wd+7)%7); };
+const HOL_CACHE={};
+// t: h = gesetzlicher Feiertag, r = nur in manchen Bundesländern, o = Brauch- und Gedenktag
+function holidaysOf(y){
+  if(HOL_CACHE[y]) return HOL_CACHE[y];
+  const E=easterOf(y), map={};
+  const add=(d,name,t)=>{ const k=ymd(d); (map[k]=map[k]||[]).push({name,t}); };
+  const D=(m,d)=>new Date(y,m-1,d), adv4=addDays(D(12,24),-D(12,24).getDay());
+  add(D(1,1),"Neujahr","h"); add(D(1,6),"Heilige Drei Könige (regional)","r"); add(D(2,14),"Valentinstag","o");
+  add(addDays(E,-48),"Rosenmontag","o"); add(addDays(E,-47),"Faschingsdienstag","o"); add(addDays(E,-46),"Aschermittwoch","o");
+  add(lastWeekday(y,2,0),"Beginn Sommerzeit","o");
+  add(addDays(E,-2),"Karfreitag","h"); add(E,"Ostersonntag","o"); add(addDays(E,1),"Ostermontag","h");
+  add(D(5,1),"Tag der Arbeit","h"); add(addDays(E,39),"Christi Himmelfahrt / Vatertag","h"); add(nthWeekday(y,4,0,2),"Muttertag","o");
+  add(addDays(E,49),"Pfingstsonntag","o"); add(addDays(E,50),"Pfingstmontag","h"); add(addDays(E,60),"Fronleichnam (regional)","r");
+  add(D(10,3),"Tag der Deutschen Einheit","h"); add(nthWeekday(y,9,0,1),"Erntedankfest","o");
+  add(lastWeekday(y,9,0),"Ende Sommerzeit","o"); add(D(10,31),"Halloween","o"); add(D(10,31),"Reformationstag (regional)","r");
+  add(D(11,1),"Allerheiligen (regional)","r"); add(D(11,11),"Martinstag","o"); add(addDays(adv4,-28),"Totensonntag","o");
+  add(addDays(adv4,-21),"1. Advent","o"); add(addDays(adv4,-14),"2. Advent","o"); add(addDays(adv4,-7),"3. Advent","o"); add(adv4,"4. Advent","o");
+  add(D(12,6),"Nikolaus","o"); add(D(12,24),"Heiligabend","o"); add(D(12,25),"1. Weihnachtstag","h"); add(D(12,26),"2. Weihnachtstag","h"); add(D(12,31),"Silvester","o");
+  const ord={h:0,o:1,r:2}; Object.values(map).forEach(l=>l.sort((a,b)=>ord[a.t]-ord[b.t]));
+  return HOL_CACHE[y]=map;
+}
+let CAL_HOL=store.get("cal_hol")!=="0";
+const calHols=k=>CAL_HOL?(holidaysOf(+k.slice(0,4))[k]||[]):[];
+function calRender(){
+  const todayK=ymd(new Date()), y=calView.getFullYear(), mo=calView.getMonth();
+  $("calHol").checked=CAL_HOL;
+  $("calTitle").textContent=calView.toLocaleDateString("de-DE",{month:"long",year:"numeric"});
+  $("calHead").innerHTML=DAYS_DE.map(d=>`<div>${d}</div>`).join("");
+  const lead=(new Date(y,mo,1).getDay()+6)%7, dim=new Date(y,mo+1,0).getDate(), rows=Math.ceil((lead+dim)/7);
+  let html="";
+  for(let i=0;i<rows*7;i++){
+    const d=new Date(y,mo,1-lead+i), k=ymd(d), es=calEntries(k), hs=calHols(k), out=d.getMonth()!==mo;
+    const chips=[...hs.map(h=>`<span class="c ${h.t}">${calEsc(h.name)}</span>`),...es.map(e=>`<span class="c${e.done?" done":""}">${e.time?e.time+" ":""}${calEsc(e.text)}</span>`)];
+    html+=`<button class="cal-day${out?" out":""}${k===todayK?" today":""}${k===calSel?" sel":""}" data-k="${k}"><span class="n">${d.getDate()}</span>${chips.slice(0,3).join("")}${chips.length>3?`<span class="m">+${chips.length-3} weitere</span>`:""}</button>`;
+  }
+  $("calDays").innerHTML=html;
+  // Große Anzeige für heute, wenn etwas ansteht (Eintrag oder Feiertag)
+  const te=calEntries(todayK), th=calHols(todayK), box=$("calToday");
+  box.classList.toggle("hide",!te.length&&!th.length);
+  if(te.length||th.length) box.innerHTML=`<div class="ct">Heute</div><div class="cd">${calLong(todayK)}</div>${th.map(h=>`<div class="hol" style="color:${HOL_COL[h.t]}">${calEsc(h.name)}</div>`).join("")}${te.map(e=>`<div class="ce${e.done?" done":""}">${e.time?`<b>${e.time}</b>`:""}${calEsc(e.text)}</div>`).join("")}`;
+  // Seitenleiste: gewählter Tag
+  $("calSel").textContent=calLong(calSel);
+  const es=calEntries(calSel), hs2=calHols(calSel);
+  $("calList").innerHTML=hs2.map(h=>`<div class="cal-hol" style="--hc:${HOL_COL[h.t]}">${calEsc(h.name)}</div>`).join("")+(es.length?es.map(e=>`<div class="cal-ent${e.done?" done":""}"><input type="checkbox" data-id="${e.id}" ${e.done?"checked":""} aria-label="Erledigt"><span class="t">${e.time?`<b>${e.time}</b>`:""}${calEsc(e.text)}</span><button data-del="${e.id}" aria-label="Eintrag löschen">×</button></div>`).join(""):'<div class="perk">Keine eigenen Einträge für diesen Tag.</div>');
+}
+$("calHol").addEventListener("change",()=>{ CAL_HOL=$("calHol").checked; store.set("cal_hol",CAL_HOL?"1":"0"); calRender(); });
+$("calPrev").onclick=()=>{ calView=new Date(calView.getFullYear(),calView.getMonth()-1,1); calRender(); };
+$("calNext").onclick=()=>{ calView=new Date(calView.getFullYear(),calView.getMonth()+1,1); calRender(); };
+$("calNow").onclick=()=>{ const n=new Date(); calView=new Date(n.getFullYear(),n.getMonth(),1); calSel=ymd(n); calRender(); };
+$("calDays").addEventListener("click",e=>{ const b=e.target.closest(".cal-day"); if(!b) return; calSel=b.dataset.k; const d=new Date(calSel+"T12:00:00"); if(d.getMonth()!==calView.getMonth()) calView=new Date(d.getFullYear(),d.getMonth(),1); calRender(); $("calText").focus(); });
+$("calForm").addEventListener("submit",e=>{
+  e.preventDefault(); const t=$("calText").value.trim(); if(!t) return;
+  (CAL[calSel]=CAL[calSel]||[]).push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,5),time:$("calTime").value||"",text:t,done:false});
+  calSave(); $("calText").value=""; calRender();
+});
+$("calList").addEventListener("click",e=>{ const id=e.target.dataset&&e.target.dataset.del; if(!id) return; CAL[calSel]=(CAL[calSel]||[]).filter(x=>x.id!==id); if(!CAL[calSel].length) delete CAL[calSel]; calSave(); calRender(); });
+$("calList").addEventListener("change",e=>{ const id=e.target.dataset&&e.target.dataset.id; if(!id) return; const x=(CAL[calSel]||[]).find(v=>v.id===id); if(x){ x.done=e.target.checked; calSave(); calRender(); } });
+setInterval(()=>{ if(CUR_ROUTE==="kalender") calRender(); },60000);   // Datumswechsel um Mitternacht
+calRender();
+
+/* ---------- Startseite: schlanke „Heute“-Leiste ---------- */
+function homeTodayRender(){
+  const now=new Date(), k=ymd(now), te=calEntries(k), th=calHols(k);
+  const ch=(t,c)=>`<span class="ch" style="--cc:${c}">${t}</span>`;
+  const parts=[`<span class="lbl">Heute</span><span>${now.toLocaleDateString("de-DE",{weekday:"long",day:"numeric",month:"long"})}</span>`];
+  const items=[...th.map(h=>ch(calEsc(h.name),HOL_COL[h.t])),...te.map(e=>ch((e.time?e.time+" ":"")+calEsc(e.text),e.done?"#8a99a6":"#6cc3ff"))];
+  parts.push(items.length?items.slice(0,3).join("")+(items.length>3?`<span class="mu">+${items.length-3} weitere</span>`:""):'<span class="mu">Nichts eingetragen</span>');
+  // nächster Termin in den kommenden 60 Tagen
+  for(let i=1;i<=60;i++){
+    const d=addDays(now,i), kk=ymd(d), es=calEntries(kk);
+    if(es.length){ parts.push(`<span class="mu">Als Nächstes: ${p2(d.getDate())}.${p2(d.getMonth()+1)}. ${calEsc(es[0].text)}</span>`); break; }
+  }
+  parts.push('<span class="sp"></span>');
+  const lastNote=NOTES.slice().sort((a,b)=>b.updated-a.updated).find(n=>n.text.trim());
+  if(lastNote) parts.push(`<span class="mu">Notiz: ${calEsc(nTitle(lastNote.text))}</span>`);
+  $("homeToday").innerHTML=parts.join("");
+}
+setInterval(()=>{ if(CUR_ROUTE==="home") homeTodayRender(); },60000);
+
+/* ---------- KI-Generatoren: Start-Prompt ---------- */
+const KI_BASE=[
+"Du hilfst mir bei einer Ein-Datei-Website (die-website.html; daneben liegt furfsky-icons.js, die du nicht ändern oder ausgeben sollst). Bitte halte dich strikt an diese Regeln:",
+"",
+"1. Ändere NICHTS an bestehenden Bereichen. Tabu sind: Hypixel SkyBlock (die Abschnitte #vStart, #vFlips, #vMinions, #vProfile), das Notepad (#vNotes), die KI-Seite (#vKi), der Tagescheck (#gate), die Kopfzeile (#hdr) sowie die Funktionen für Routing, Datenabruf und Speicherung. Die Hauptfunktionen pflegt eine andere KI (Claude).",
+"2. Ergänze nur einen NEUEN Bereich: ein neues <section id=\"v…\" class=\"hide\"> mit eigener Kopfzeile (ein Link „Die Website“ nach #home), einen Eintrag in ROUTES und TITLES im Skript und eine Kachel in der Leiste auf der Startseite (#vHome, ersetze dort bei Bedarf eine „Idee“-Kachel).",
+"3. Stil: dunkles Design wie die Startseite, ohne Minecraft-Look (der gilt nur für SkyBlock). Speichere Daten im Browser mit store.get und store.set unter einem eigenen Schlüsselnamen (z. B. \"gym_v1\"). Verwende keine externen Bibliotheken oder Server.",
+"4. Gib mir am Ende die KOMPLETTE geänderte Datei zurück, nicht nur Teile, und liste kurz auf, was du ergänzt hast.",
+"",
+"Meine Aufgabe: "].join("\n");
+function kiUpdate(){ const t=$("kiTask").value.trim(); $("kiPrompt").value=KI_BASE+(t||"[hier eintragen]"); }
+$("kiTask").addEventListener("input",kiUpdate); kiUpdate();
+$("kiCopy").onclick=async()=>{
+  const el=$("kiPrompt");
+  try{ await navigator.clipboard.writeText(el.value); $("kiStatus").textContent="Kopiert."; }
+  catch(e){ el.focus(); el.select(); try{ document.execCommand("copy"); $("kiStatus").textContent="Kopiert."; }catch(e2){ $("kiStatus").textContent="Bitte Text markieren und mit Strg+C kopieren."; } }
+};
+
+/* ---------- Notepad ---------- */
+let NOTES=[], NSEL=null, nTimer=null;
+try{ const d=JSON.parse(store.get("notes_v1")||"{}"); NOTES=Array.isArray(d.items)?d.items:[]; NSEL=d.sel||null; }catch(e){}
+const saveNotes=()=>store.set("notes_v1",JSON.stringify({items:NOTES,sel:NSEL}));
+const nTitle=t=>(String(t).split("\n").find(l=>l.trim())||"Leere Notiz").trim().slice(0,60);
+const nDate=ms=>{ const d=new Date(ms), z=n=>String(n).padStart(2,"0"); return z(d.getDate())+"."+z(d.getMonth()+1)+"."+d.getFullYear()+" "+z(d.getHours())+":"+z(d.getMinutes()); };
+const nCur=()=>NOTES.find(n=>n.id===NSEL)||null;
+/* Claudes Ideen: wird von Claude in der Datei gepflegt. Bei jedem Auftrag neue Ideen hier anhängen: ["eindeutige-id","JJJJ-MM-TT","Text"] */
+const CLAUDE_IDEAS=[
+ ["i001","2026-10-21","Sicherung als Datei: Notizen, Kalender und Geld-Verlauf exportieren und wieder importieren (Browserwechsel, Aufräumen)."],
+ ["i002","2026-10-21","Kalender: wiederkehrende Termine (Geburtstage jedes Jahr, wöchentliche Termine) und eine Liste „Als Nächstes“."],
+ ["i003","2026-10-21","Startseite: ein kleines „Heute“-Feld auf der Pinnwand mit Terminen und der letzten Notiz."],
+ ["i004","2026-10-21","Notepad: Checklisten, Zettel anpinnen und Farben für Notizen."],
+ ["i005","2026-10-21","SkyBlock: Craft-Flips (Bazaar) und Auktionshaus-Flips als neue Unterrubriken."],
+ ["i006","2026-10-21","SkyBlock: Minion-Rechner mit Ertrag pro Stunde und Bazaar-Preisen."],
+ ["i007","2026-10-21","Gym-Rubrik: Trainingsplan und Gewichtsverlauf, der Graph aus dem Geld-Verlauf lässt sich wiederverwenden."],
+ ["i008","2026-10-21","Essen-Rubrik: Wochenplan und Einkaufsliste, die sich aus dem Plan füllt."],
+ ["i009","2026-10-21","Tagescheck pro Bereich statt nur für SkyBlock, damit weitere Rubriken eigene tägliche Eingaben haben können."],
+ ["i010","2026-10-21","Die Icon-Datei ist 1,6 MB groß: nur die tatsächlich genutzten Icons einbetten, dann lädt die Seite schneller."],
+ ["i011","2026-10-22","Music Collection: Empfehlungen brauchen eine Quelle außerhalb von Spotify (z. B. Last.fm), weil Spotify seine Empfehlungs-Schnittstelle für neue Apps abgeschaltet hat."],
+ ["i012","2026-10-22","Seite online hosten (z. B. GitHub Pages oder Netlify): Voraussetzung für den Spotify-Login und nebenbei Zugriff von mehreren Geräten."],
+ ["i013","2026-10-22","Heute-Leiste: einstellbar machen, welche Infos sie zeigt (Termine, Notiz, Notizen-Anzahl, weitere Rubriken)."],
+ ["i014","2026-10-23","Export und Import wird beim Umzug auf GitHub Pages wichtig: Notizen, Kalender und Verlauf liegen pro Web-Adresse im Browser, die lokale Datei und die neue Adresse teilen sie nicht."],
+ ["i015","2026-10-23","Der Passwort-Dialog ist nur ein Sichtschutz. Echter Schutz bräuchte einen Login auf Serverseite, z. B. ein privates Repository mit Cloudflare Access oder Netlify-Passwortschutz."]
+];
+let IDEA_DONE={}; try{ IDEA_DONE=JSON.parse(store.get("claude_ideas_done")||"{}"); }catch(e){}
+const ideasOpen=()=>CLAUDE_IDEAS.filter(i=>!IDEA_DONE[i[0]]).length;
+function ideasHtml(){
+  return '<div class="it">Claudes Ideen für die Website</div>'+CLAUDE_IDEAS.slice().reverse().map(([id,d,t])=>`<label class="${IDEA_DONE[id]?"done":""}"><input type="checkbox" data-id="${id}" ${IDEA_DONE[id]?"checked":""}><span><small>${d.slice(8,10)}.${d.slice(5,7)}.</small>${calEsc(t)}</span></label>`).join("");
+}
+function npList(){
+  const q=$("npQ").value.trim().toLowerCase(), esc=t=>String(t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  const list=NOTES.slice().sort((a,b)=>b.updated-a.updated).filter(n=>!q||n.text.toLowerCase().includes(q));
+  const showC=!q||"claudes ideen".includes(q)||CLAUDE_IDEAS.some(i=>i[2].toLowerCase().includes(q));
+  const claude=showC?`<button class="np-item claude ${NSEL==="__claude"?"on":""}" data-id="__claude"><b>Claudes Ideen</b><span>${ideasOpen()} offen · von Claude gepflegt</span></button>`:"";
+  $("npItems").innerHTML=claude+list.map(n=>`<button class="np-item ${n.id===NSEL?"on":""}" data-id="${n.id}"><b>${esc(nTitle(n.text))}</b><span>${nDate(n.updated)}</span></button>`).join("")||'<div class="perk">Keine Notizen gefunden.</div>';
+}
+function npSelect(id){
+  NSEL=id; const isC=id==="__claude", n=isC?null:nCur();
+  $("npText").classList.toggle("hide",isC); $("npIdeas").classList.toggle("hide",!isC);
+  if(isC) $("npIdeas").innerHTML=ideasHtml();
+  $("npText").disabled=!n; $("npText").value=n?n.text:""; $("npDel").disabled=!n;
+  $("npStatus").textContent=isC?"Von Claude gepflegt. Die Haken setzt du selbst.":n?"Gespeichert":"Lege eine neue Notiz an.";
+  saveNotes(); npList();
+}
+$("npIdeas").addEventListener("change",e=>{ const id=e.target.dataset&&e.target.dataset.id; if(!id) return; IDEA_DONE[id]=e.target.checked; store.set("claude_ideas_done",JSON.stringify(IDEA_DONE)); $("npIdeas").innerHTML=ideasHtml(); npList(); });
+function npNew(){
+  const n={id:Date.now().toString(36)+Math.random().toString(36).slice(2,5),text:"",updated:Date.now()};
+  NOTES.unshift(n); npSelect(n.id); $("npText").focus();
+}
+$("npNew").onclick=npNew;
+$("npQ").addEventListener("input",npList);
+$("npItems").addEventListener("click",e=>{ const b=e.target.closest(".np-item"); if(b) npSelect(b.dataset.id); });
+$("npText").addEventListener("input",()=>{
+  const n=nCur(); if(!n) return;
+  n.text=$("npText").value; n.updated=Date.now(); $("npStatus").textContent="Speichert …";
+  clearTimeout(nTimer); nTimer=setTimeout(()=>{ saveNotes(); $("npStatus").textContent="Gespeichert "+nDate(n.updated).slice(11); npList(); },400);
+});
+$("npDel").onclick=()=>{
+  const n=nCur(); if(!n) return;
+  if(!confirm("Diese Notiz wirklich löschen?")) return;
+  NOTES=NOTES.filter(x=>x!==n);
+  npSelect(NOTES.length?NOTES.slice().sort((a,b)=>b.updated-a.updated)[0].id:null);
+};
+if(NSEL==="__claude") npSelect("__claude"); else if(!NOTES.length) npNew(); else npSelect(nCur()?NSEL:NOTES.slice().sort((a,b)=>b.updated-a.updated)[0].id);
+
+/* ---------- Anzeigegröße: automatisch nach Fensterbreite (gestaltet für 1920 Pixel, HD) ---------- */
+if(window.CSS && CSS.supports && CSS.supports("zoom","1.2")){
+  const applyScale=()=>{ document.documentElement.style.zoom=String(Math.min(2,Math.max(1,window.innerWidth/1920))); };
+  let rt=null; window.addEventListener("resize",()=>{ clearTimeout(rt); rt=setTimeout(applyScale,150); });
+  applyScale();
+}
+
+/* ---------- Tagescheck: Networth einmal täglich, Key bei Ablauf ---------- */
+let NWD={}; try{ NWD=JSON.parse(store.get("nwdaily")||"{}"); }catch(e){}
+const saveNwd=()=>store.set("nwdaily",JSON.stringify(NWD));
+let KEY_BAD=false, KEY_SKIPPED=false;
+async function checkKey(key){
+  // Nur direkt bei Hypixel prüfen, der Key geht dafür an keinen Proxy
+  const base="https://api.hypixel.net/v2/skyblock/profiles?uuid=00000000000000000000000000000000";
+  for(const go of [()=>fetch(base,{headers:{"API-Key":key}}), ()=>fetch(base+"&key="+encodeURIComponent(key))]){
+    try{ const d=await (await go()).json(), c=d.cause||""; return /key/i.test(c)&&/(invalid|missing|no |unknown|expired)/i.test(c) ? "invalid" : "ok"; }catch(e){}
+  }
+  return "ok";   // nicht prüfbar (z. B. vom Browser blockiert): nicht aussperren
+}
+function applyNwd(){
+  const pid=CUR?CUR.pid:store.get("lastpid"), t=today();
+  if(!pid||NWD[t]===undefined) return;
+  HIST[pid]=HIST[pid]||{}; HIST[pid][t]=Object.assign(HIST[pid][t]||{}, {n:NWD[t]}); saveHist();
+  if(CUR) renderHist(); updateGlance();
+}
+function gateRefresh(){
+  const nm=store.get("mcname")||"LachCash"; $("gSc").href="https://sky.shiiyu.moe/stats/"+encodeURIComponent(nm); $("gSc").textContent="SkyCrypt von "+nm+" öffnen";
+  const needNw=NWD[today()]===undefined&&!AUTO_NW, needKey=KEY_BAD&&!KEY_SKIPPED, open=(needNw||needKey)&&CUR_ROUTE.startsWith("skyblock");
+  $("gNwPart").classList.toggle("hide",!needNw); $("gKeyPart").classList.toggle("hide",!needKey);
+  const was=!$("gate").classList.contains("hide");
+  $("gate").classList.toggle("hide",!open); document.querySelector("main").inert=open||LOCKED;
+  if(open&&!was) setTimeout(()=>$(needNw?"gNwVal":"gKey").focus(),0);
+}
+$("gGo").onclick=async()=>{
+  $("gErr").textContent="";
+  const needNw=NWD[today()]===undefined&&!AUTO_NW, needKey=KEY_BAD&&!KEY_SKIPPED; let nv=null;
+  if(needNw){ const v=parseFloat($("gNwVal").value); if(!(v>=0)){ $("gErr").textContent="Bitte den Networth eintragen."; return; } nv=v*parseFloat($("gNwUnit").value); }
+  if(needKey){
+    const k=$("gKey").value.trim();
+    if(!k){ $("gErr").textContent="Bitte einen neuen Key eintragen oder „Ohne Key weitermachen“ wählen."; return; }
+    $("gGo").disabled=true; const r=await checkKey(k); $("gGo").disabled=false;
+    if(r==="invalid"){ $("gErr").textContent="Dieser Key wird von Hypixel nicht akzeptiert."; return; }
+    $("apikey").value=k; store.set("hkey",k); KEY_BAD=false;
+  }
+  if(nv!==null){ NWD[today()]=nv; saveNwd(); applyNwd(); }
+  gateRefresh();
+};
+$("gSkipKey").onclick=()=>{ KEY_SKIPPED=true; gateRefresh(); };
+gateRefresh();
+(async()=>{ const k=store.get("hkey"); if(k && await checkKey(k)==="invalid") KEY_BAD=true; gateRefresh(); })();
+
+$("uname").value = store.get("mcname") || "LachCash";
+$("apikey").value = store.get("hkey"); $("uuid").value = store.get("uuid");
+setMe($("uname").value);
+$("scLink").href="https://sky.shiiyu.moe/stats/"+encodeURIComponent($("uname").value);
+$("apiLink").href="https://sky.shiiyu.moe/api/v2/profile/"+encodeURIComponent($("uname").value);
+loadProfile();   // lädt im Hintergrund, damit der Tagesverlauf auch ohne Profil-Besuch wächst
+view(location.hash.slice(1));
+load(); loadItems(); loadInfo(); tick(); setInterval(tick,1000); setInterval(loadInfo,300000); setInterval(load,30000);
+</script>
+</body>
+</html>
