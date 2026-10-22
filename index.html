@@ -289,6 +289,71 @@ header #me{grid-column:3;grid-row:1;justify-self:end}
 .today-strip .sp{flex:1}
 #lock{position:fixed;inset:0;z-index:200;display:grid;place-items:center;background:#0b1118;padding:16px}
 #lock.hide{display:none}
+
+
+
+/* Dezente optische Verfeinerung der Startseite und der Heute-Leiste */
+#vHome .hero{position:relative;overflow:hidden;border-radius:16px;background:radial-gradient(ellipse at 85% 5%,rgba(108,195,255,.16),transparent 42%),linear-gradient(120deg,rgba(255,255,255,.035),transparent 65%);padding:20px 24px;border:1px solid rgba(108,195,255,.14)}
+#vHome .hero h2{font-size:clamp(30px,4vw,40px);letter-spacing:-.7px;text-shadow:0 4px 24px rgba(108,195,255,.12)}
+#vHome .today-wrap{position:relative;margin-top:14px}
+#vHome #homeToday{margin-top:0;min-height:54px;padding:13px 54px 13px 17px;gap:9px 13px;font-size:15px;line-height:1.5;background:linear-gradient(110deg,rgba(108,195,255,.09),var(--row) 45%,rgba(181,140,255,.06));border-left:4px solid #6cc3ff;box-shadow:0 8px 24px rgba(0,0,0,.14);user-select:none;-webkit-user-select:none}
+#vHome #homeToday .lbl{font-size:13px;text-transform:uppercase;letter-spacing:.8px;color:#8bd3ff}
+#vHome #homeToday .today-date{font-weight:650;font-size:16px}
+#vHome #homeToday .ch{padding:3px 10px;border-radius:5px;font-size:13px}
+#vHome .today-settings-toggle{position:absolute;right:7px;top:50%;transform:translateY(-50%);width:34px;height:34px;padding:0;display:grid;place-items:center;text-align:center;box-sizing:border-box;border:1px solid var(--line);border-radius:9px;background:rgba(255,255,255,.045);color:var(--mu);font-size:17px;line-height:1;cursor:pointer;transition:color .18s,border-color .18s,background .18s;user-select:none;-webkit-user-select:none}
+#vHome .today-settings-toggle:hover,#vHome .today-settings-toggle:focus-visible{color:#8bd3ff;border-color:#6cc3ff;background:rgba(108,195,255,.12);outline:none}
+#vHome .today-settings-panel{position:relative;margin:8px 0 4px;padding:16px 18px;background:linear-gradient(135deg,rgba(108,195,255,.07),transparent 55%),var(--row);border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 30px rgba(0,0,0,.18);animation:todayPanelIn .16s ease-out;user-select:none;-webkit-user-select:none}
+#vHome .today-settings-heading{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:12px;font-size:16px;font-weight:750;color:var(--tx)}
+#vHome .today-options{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px}
+#vHome .today-options label{display:flex;align-items:center;gap:9px;min-height:39px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:rgba(255,255,255,.025);color:var(--tx);font-size:14px;cursor:pointer;transition:border-color .15s,background .15s;user-select:none;-webkit-user-select:none}
+#vHome .today-options label:hover{border-color:rgba(108,195,255,.55);background:rgba(108,195,255,.06)}
+#vHome .today-options input{accent-color:#6cc3ff;width:15px;height:15px;margin:0;flex:none;cursor:pointer}
+#vHome .today-settings-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:13px;font-size:12px}
+#vHome .today-reset{padding:6px 10px;font-size:12px;border-radius:7px;background:transparent;color:var(--mu);border:1px solid var(--line);cursor:pointer}
+#vHome .today-reset:hover{color:var(--tx);border-color:#6cc3ff}
+#vHome .board .tile{box-shadow:0 12px 26px rgba(0,0,0,.22);transition:transform .2s ease,box-shadow .2s ease,filter .2s ease}
+#vHome .board .tile b{font-size:19px;letter-spacing:-.2px}
+#vHome .board .tile span:not(.badge){font-size:14px;line-height:1.45}
+#vHome .board .tile:hover{box-shadow:0 16px 30px rgba(0,0,0,.3)}
+@keyframes todayPanelIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:560px){#vHome .today-settings-panel{padding:13px}#vHome .today-options{grid-template-columns:1fr}#vHome .today-settings-footer{align-items:flex-start;flex-direction:column}#vHome #homeToday{font-size:14px;padding-left:12px}}
+
+
+/* ---------- Tagesgeld Hopping: eigener, gekapselter Bereich ---------- */
+.th-wrap{display:grid;gap:18px;margin:18px 0 34px}
+.th-intro{padding:22px;border:1px solid #344052;border-radius:18px;background:linear-gradient(135deg,rgba(84,128,180,.17),rgba(43,54,72,.28));box-shadow:0 12px 32px rgba(0,0,0,.16)}
+.th-kicker{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:#8fc9ff;font-weight:750}
+.th-intro h3{font-size:clamp(1.45rem,2.5vw,2rem);line-height:1.2;margin:8px 0 10px}
+.th-intro p,.th-muted{color:var(--muted,#aab5c4);line-height:1.6}
+.th-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.th-card{min-width:0;padding:18px;border:1px solid var(--line,#303a49);border-radius:16px;background:rgba(255,255,255,.025)}
+.th-card h3{margin:0 0 12px;font-size:1.08rem}
+.th-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.th-field{display:grid;gap:6px;min-width:0;color:var(--muted,#aab5c4);font-size:.88rem}
+.th-field input,.th-field select,.th-field textarea{box-sizing:border-box;width:100%;min-width:0;padding:10px 11px;border:1px solid var(--line,#303a49);border-radius:10px;background:rgba(0,0,0,.2);color:inherit;font:inherit}
+.th-field textarea{min-height:74px;resize:vertical}
+.th-wide{grid-column:1/-1}
+.th-check{display:flex;gap:9px;align-items:flex-start;line-height:1.45;color:var(--text,#e7edf5);font-size:.9rem}
+.th-check input{margin-top:3px;accent-color:#71c5ff}
+.th-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}
+.th-primary{border:1px solid #6aaee9;background:rgba(75,151,220,.18);color:inherit;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer}
+.th-secondary{border:1px solid var(--line,#303a49);background:transparent;color:inherit;border-radius:10px;padding:10px 13px;cursor:pointer}
+.th-list{display:grid;gap:10px;margin-top:12px}
+.th-offer{padding:14px;border:1px solid var(--line,#303a49);border-radius:13px;background:rgba(255,255,255,.025)}
+.th-offer-head{display:flex;gap:12px;justify-content:space-between;align-items:flex-start}
+.th-offer h4{margin:0 0 5px;font-size:1rem}
+.th-rate{font-size:1.3rem;font-weight:800;color:#91d5ff;white-space:nowrap}
+.th-pills{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.th-pill{padding:4px 8px;border-radius:999px;background:rgba(130,151,178,.13);color:var(--muted,#aab5c4);font-size:.78rem}
+.th-pill.safe{background:rgba(76,191,139,.13);color:#8fe0b7}
+.th-pill.warn{background:rgba(235,171,74,.13);color:#f0c477}
+.th-small{font-size:.82rem;color:var(--muted,#aab5c4);line-height:1.5}
+.th-empty{padding:18px;border:1px dashed var(--line,#303a49);border-radius:12px;color:var(--muted,#aab5c4);text-align:center}
+.th-source{font-size:.84rem;line-height:1.55;color:var(--muted,#aab5c4)}
+.th-source a{color:#91d5ff}
+@media(max-width:760px){.th-grid{grid-template-columns:1fr}.th-form{grid-template-columns:1fr}.th-wide{grid-column:auto}.th-offer-head{gap:8px}}
+
+.bk-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;margin-bottom:16px}
 </style>
 </head>
 <body>
@@ -328,7 +393,23 @@ header #me{grid-column:3;grid-row:1;justify-self:end}
 <!-- ============ STARTSEITE: DIE WEBSITE (neue Bereiche hier als Kachel + Abschnitt ergänzen) ============ -->
 <section id="vHome">
   <div class="hero" style="--tex:var(--t-stone)"><h2>Die Website</h2></div>
-  <a id="homeToday" class="today-strip" href="#kalender" aria-label="Heute, zum Kalender"></a>
+  <div class="today-wrap">
+    <a id="homeToday" class="today-strip" href="#kalender" aria-label="Heute, zum Kalender"></a>
+    <button id="todaySettingsToggle" class="today-settings-toggle" type="button" aria-label="Heute-Leiste einstellen" aria-expanded="false" title="Heute-Leiste einstellen">⚙</button>
+  </div>
+  <div id="todaySettingsPanel" class="today-settings-panel hide" aria-label="Einstellungen der Heute-Leiste">
+    <div class="today-settings-heading"><span>Heute-Leiste</span><span class="mu">Anzeige auswählen</span></div>
+    <div class="today-options">
+      <label><input type="checkbox" data-today-option="date"> Datum</label>
+      <label><input type="checkbox" data-today-option="events"> Heutige Termine</label>
+      <label><input type="checkbox" data-today-option="holidays"> Feiertage und Gedenktage</label>
+      <label><input type="checkbox" data-today-option="next"> Nächster Termin</label>
+      <label><input type="checkbox" data-today-option="lastNote"> Letzte Notiz</label>
+      <label><input type="checkbox" data-today-option="noteCount"> Anzahl gespeicherter Notizen</label>
+      <label><input type="checkbox" data-today-option="eventCount"> Anzahl heutiger Termine</label>
+    </div>
+    <div class="today-settings-footer"><span class="mu">Wird lokal in diesem Browser gespeichert.</span><button id="todaySettingsReset" type="button" class="today-reset">Zurücksetzen</button></div>
+  </div>
   <nav class="board" aria-label="Bereiche">
     <a class="tile" href="#skyblock" style="--ac:#5fd38d;--paper:#c9eccf;--x:6%;--y:5%;--r:-3deg"><b>Hypixel SkyBlock</b><span>Bazaar-Flips, Minions, Profil und Infos zum Spiel.</span></a>
     <a class="tile" href="#notepad" style="--ac:#e9c46a;--paper:#fff3a3;--x:38%;--y:2%;--r:2.5deg"><b>Notepad</b><span>Notizen, die sich automatisch speichern.</span></a>
@@ -336,8 +417,33 @@ header #me{grid-column:3;grid-row:1;justify-self:end}
     <div class="tile soon" style="--ac:#e5736b;--paper:#f7c4bf;--x:16%;--y:41%;--r:4deg"><span class="badge">Idee</span><b>Gym</b><span>Training und Fortschritt.</span></div>
     <a class="tile" href="#kalender" style="--ac:#6cc3ff;--paper:#c6dff7;--x:50%;--y:44%;--r:-4deg"><b>Kalender</b><span>Termine eintragen, heute groß im Blick.</span></a>
     <div class="tile soon" style="--ac:#ff9f6b;--paper:#ffdcb8;--x:7%;--y:73%;--r:-2deg"><span class="badge">Idee</span><b>Essen</b><span>Pläne und Rezepte.</span></div>
-    <div class="tile soon" style="--ac:#b58cff;--paper:#e0d2f7;--x:40%;--y:76%;--r:3deg"><span class="badge">Idee</span><b>Gaming</b><span>Weitere Spiele und Tools.</span></div>
+    <a class="tile" href="#tagesgeld" style="--ac:#63c8b2;--paper:#c7eee4;--x:40%;--y:76%;--r:3deg"><span class="badge">Neu</span><b>Tagesgeld Hopping</b><span>Sichere Angebote vergleichen und Zinswechsel planen.</span></a>
+    <a class="tile" href="#sicherung" style="--ac:#8fb3c7;--paper:#d5dde3;--x:72%;--y:68%;--r:-3deg"><b>Sicherung</b><span>Notizen, Kalender und Verlauf exportieren und importieren.</span></a>
   </nav>
+</section>
+
+<!-- ============ BEREICH SICHERUNG (Export / Import) ============ -->
+<section id="vBackup" class="hide">
+  <div class="topbar"><a class="btn" href="#home">Die Website</a><h2>Sicherung</h2></div>
+  <div class="bk-grid">
+    <div class="pr">
+      <h3 style="margin-top:0;color:var(--gold)">Exportieren</h3>
+      <p class="note" style="margin-top:0">Speichert Notizen, Kalender, Geld- und Networth-Verlauf, Tagesgeld-Angebote, SkyBlock-Orders, erledigte Ideen und Einstellungen in einer Datei.</p>
+      <label style="flex-direction:row;align-items:center;gap:8px;margin:10px 0"><input type="checkbox" id="bkKey"> Hypixel-API-Key mit sichern (Datei dann gut aufbewahren)</label>
+      <button id="bkExport">Sicherung herunterladen</button>
+      <p class="k" id="bkLast" style="margin-top:10px"></p>
+    </div>
+    <div class="pr">
+      <h3 style="margin-top:0;color:#6cc3ff">Importieren</h3>
+      <p class="note" style="margin-top:0">Wähl eine Sicherungsdatei von dieser Website aus.</p>
+      <input type="file" id="bkFile" accept=".json,application/json" style="margin:6px 0 10px">
+      <label style="flex-direction:row;align-items:center;gap:8px"><input type="radio" name="bkMode" value="merge" checked> Zusammenführen (nichts geht verloren)</label>
+      <label style="flex-direction:row;align-items:center;gap:8px;margin-bottom:10px"><input type="radio" name="bkMode" value="replace"> Ersetzen (Sicherung überschreibt die vorhandenen Daten)</label>
+      <button id="bkImport">Importieren</button>
+      <div id="bkStatus" class="status" style="margin-top:10px"></div>
+    </div>
+  </div>
+  <p class="note">Deine Daten liegen im Browser und pro Web-Adresse getrennt. Beim Umzug auf eine neue Adresse (z. B. von der lokalen Datei auf GitHub Pages) exportierst du hier und importierst auf der neuen Adresse. Die Sicherung enthält kein Seitenpasswort.</p>
 </section>
 
 <!-- ============ BEREICH KALENDER ============ -->
@@ -389,6 +495,66 @@ header #me{grid-column:3;grid-row:1;justify-self:end}
       <div class="binding" aria-hidden="true"></div>
       <div class="paper"><textarea id="npText" spellcheck="true" placeholder="Schreib hier deine Notiz …" aria-label="Notiz"></textarea><div id="npIdeas" class="ideas hide"></div></div>
       <div class="np-bar"><span id="npStatus" class="k"></span><button id="npDel">Notiz löschen</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NEUER BEREICH: TAGESGELD HOPPING ============ -->
+<section id="vTagesgeld" class="hide">
+  <div class="topbar"><a class="btn" href="#home">Die Website</a><h2>Tagesgeld Hopping</h2></div>
+  <div class="th-wrap">
+    <div class="th-intro">
+      <div class="th-kicker">Sicherheit zuerst · Rendite danach</div>
+      <h3>Mehr Zinsen mit Plan statt blindem Wechseln.</h3>
+      <p>Das ist die erste, lokale Konzeptversion: Du kannst Angebote eintragen und nach dem geschätzten Zinsertrag über 12 Monate vergleichen. Es werden noch <strong>keine Live-Zinsen abgerufen</strong> und kein Angebot wird automatisch als sicher bestätigt.</p>
+      <div class="th-pills"><span class="th-pill safe">1. Einlagensicherung prüfen</span><span class="th-pill">2. Effektivzins berechnen</span><span class="th-pill">3. Wechselaufwand berücksichtigen</span></div>
+    </div>
+    <div class="th-grid">
+      <div class="th-card">
+        <h3>Dein Vergleich</h3>
+        <label class="th-field">Vergleichsbetrag (€)<input id="thAmount" type="number" min="1" step="100" value="10000" inputmode="decimal"></label>
+        <p class="th-muted" style="font-size:.88rem;margin:10px 0 0">Die Sortierung nutzt den geschätzten Bruttozinsertrag für 12 Monate: Aktionszins für die Aktionsdauer, danach der angegebene Standardzins. Steuern, Zinseszins und Wechselkosten sind noch nicht eingerechnet.</p>
+        <label class="th-check" style="margin-top:13px"><input id="thSafeOnly" type="checkbox" checked> Nur Angebote anzeigen, bei denen ich die Banklizenz und zuständige gesetzliche Einlagensicherung geprüft habe.</label>
+      </div>
+      <div class="th-card">
+        <h3>Sicherheitsregel</h3>
+        <p>In der EU sind gedeckte Einlagen grundsätzlich bis <strong>100.000 € pro Person und Bank</strong> durch ein anerkanntes nationales Einlagensicherungssystem geschützt. Alle Konten bei derselben Banklizenz werden für diese Grenze zusammengerechnet.</p>
+        <p class="th-muted" style="font-size:.88rem">Nicht nur auf den Markennamen oder den Vermittler schauen: Entscheidend ist, bei welcher rechtlichen Bank das Geld liegt und welches Sicherungssystem zuständig ist. „EU-Sitz“ allein ist kein vollständiger Sicherheitscheck.</p>
+        <p class="th-source">Offizielle Quellen: <a href="https://finance.ec.europa.eu/banking/banking-regulation/deposit-guarantee-schemes_en" target="_blank" rel="noopener noreferrer">EU-Kommission – Einlagensicherung</a> · <a href="https://www.eba.europa.eu/activities/single-rulebook/regulatory-activities/depositor-protection/deposit-guarantee-schemes-data" target="_blank" rel="noopener noreferrer">EBA – nationale Sicherungssysteme</a></p>
+      </div>
+    </div>
+    <div class="th-card">
+      <h3>Angebot hinzufügen</h3>
+      <form id="thForm">
+        <div class="th-form">
+          <label class="th-field">Bank / rechtliche Bankbezeichnung<input id="thBank" required maxlength="100" placeholder="z. B. vollständiger Bankname"></label>
+          <label class="th-field">Land des Sicherungssystems<input id="thCountry" required maxlength="60" placeholder="z. B. Deutschland"></label>
+          <label class="th-field">Aktionszins p. a. (%)<input id="thPromoRate" type="number" min="0" max="30" step="0.01" required placeholder="z. B. 4"></label>
+          <label class="th-field">Aktionsdauer (Monate)<input id="thPromoMonths" type="number" min="0" max="12" step="1" required value="6"></label>
+          <label class="th-field">Standardzins danach p. a. (%)<input id="thBaseRate" type="number" min="0" max="30" step="0.01" required placeholder="z. B. 1.5"></label>
+          <label class="th-field">Maximal verzinster Betrag (€)<input id="thCap" type="number" min="0" step="100" placeholder="leer = kein Limit eingetragen"></label>
+          <label class="th-field">Aktionsende (falls bekannt)<input id="thEnd" type="date"></label>
+          <label class="th-field">Offizielle Angebotsseite (URL)<input id="thUrl" type="url" placeholder="https://…"></label>
+          <label class="th-check th-wide"><input id="thVerified" type="checkbox"> Ich habe auf einer offiziellen Quelle geprüft: tatsächliche kontoführende Bank, gültige Lizenz und zuständiges gesetzliches Einlagensicherungssystem. Das ist meine manuelle Prüfung, keine automatische Garantie.</label>
+          <label class="th-field th-wide">Notiz / Bedingungen<textarea id="thNotes" maxlength="1000" placeholder="Neukundenregel, Mindestanlage, Auszahlung, Zinsgarantie …"></textarea></label>
+        </div>
+        <div class="th-actions"><button class="th-primary" type="submit">Angebot speichern</button><button class="th-secondary" type="reset">Formular leeren</button></div>
+      </form>
+    </div>
+    <div class="th-card">
+      <h3>Deine Angebotsliste</h3>
+      <p class="th-muted" style="font-size:.88rem">Sortiert nach geschätztem Bruttoertrag über 12 Monate. Angebote sind von dir eingetragene Daten, keine redaktionell geprüften Empfehlungen.</p>
+      <div id="thOffers" class="th-list"><div class="th-empty">Noch keine Angebote eingetragen.</div></div>
+    </div>
+    <div class="th-card">
+      <h3>So soll der spätere Algorithmus entscheiden</h3>
+      <ol>
+        <li><strong>Harte Sicherheitsfilter:</strong> lizenzierte Bank identifizieren, gesetzliches Einlagensicherungssystem verifizieren, geschützten Gesamtbetrag unter 100.000 € je Banklizenz halten.</li>
+        <li><strong>Aktionszins fair vergleichen:</strong> nicht nur „bis zu 4 %“ bewerten, sondern Aktionsdauer, Standardzins danach, Höchstbetrag und Angebotsende über denselben Zeitraum berechnen.</li>
+        <li><strong>Praktikabilität einrechnen:</strong> Neukundenstatus, Kontoführung, Überweisungsdauer, Mindestbetrag, Steuerunterlagen und Aufwand eines Wechsels berücksichtigen.</li>
+        <li><strong>Dann ranken:</strong> erwarteter Nettoertrag und Wechselaufwand vergleichen; Sicherheitsfilter niemals durch einen höheren Zins ausgleichen.</li>
+      </ol>
+      <p class="th-source">Wichtig: Das ist ein Vergleichs- und Planungstool, keine Finanzberatung. Vor einer Kontoeröffnung die aktuellen Bedingungen und die Einlagensicherung direkt bei Bank und Sicherungssystem kontrollieren.</p>
     </div>
   </div>
 </section>
@@ -1031,10 +1197,10 @@ async function loadProfile(){
 function setMe(name){
   $("me").innerHTML = name ? `<img alt="" src="https://mc-heads.net/avatar/${encodeURIComponent(name)}/48" onerror="this.remove()">${name}` : "Profil";
 }
-const ROUTES={home:"vHome",kalender:"vCal",notepad:"vNotes",ki:"vKi",skyblock:"vStart","skyblock/bazaar":"vFlips","skyblock/minions":"vMinions","skyblock/profil":"vProfile"};
+const ROUTES={home:"vHome",sicherung:"vBackup",kalender:"vCal",notepad:"vNotes",ki:"vKi",tagesgeld:"vTagesgeld",skyblock:"vStart","skyblock/bazaar":"vFlips","skyblock/minions":"vMinions","skyblock/profil":"vProfile"};
 let CUR_ROUTE="home";
 const OLD_ROUTES={start:"skyblock",bazaar:"skyblock/bazaar",minions:"skyblock/minions",profil:"skyblock/profil"};
-const TITLES={home:"Die Website",kalender:"Kalender",notepad:"Notepad",ki:"KI-Generatoren",skyblock:"Hypixel SkyBlock","skyblock/bazaar":"Bazaar-Flips","skyblock/minions":"Minions","skyblock/profil":"Profil"};
+const TITLES={home:"Die Website",sicherung:"Sicherung",kalender:"Kalender",notepad:"Notepad",ki:"KI-Generatoren",tagesgeld:"Tagesgeld Hopping",skyblock:"Hypixel SkyBlock","skyblock/bazaar":"Bazaar-Flips","skyblock/minions":"Minions","skyblock/profil":"Profil"};
 function view(v){
   v=OLD_ROUTES[v]||v; if(!ROUTES[v]) v="home";
   CUR_ROUTE=v;
@@ -1049,6 +1215,7 @@ function view(v){
   if(v==="skyblock/minions"&&!MIN&&typeof loadMinions==="function") loadMinions();
   if(v==="kalender"&&typeof calRender==="function") calRender();
   if(v==="home"&&typeof homeTodayRender==="function") homeTodayRender();
+  if(v==="sicherung"&&typeof bkLastShow==="function") bkLastShow();
   if(typeof gateRefresh==="function") gateRefresh();   // Tagescheck nur im SkyBlock-Bereich
 }
 window.addEventListener("hashchange",()=>view(location.hash.slice(1)));
@@ -1218,6 +1385,64 @@ async function loadMinions(){
 ["mShow","mSort"].forEach(id=>$(id).addEventListener("change",renderMinions)); $("mQ").addEventListener("input",renderMinions);
 $("mReload").onclick=()=>loadMinions();
 
+/* ---------- Sicherung: Export / Import ---------- */
+// Alle Speicher-Schlüssel der Website. Neue Bereiche mit eigenem Schlüssel hier eintragen, sonst fehlen sie in der Sicherung.
+const BK_KEYS=["notes_v1","claude_ideas_done","seed_chats_ideen","cal_v1","cal_hol","hist","nwdaily","orders","tagesgeld_hopping_v1","today_strip_v1","mcname","uuid","lastpid"];   // „hkey“ (API-Key) nur auf Wunsch
+function bkLastShow(){ const t=+store.get("last_backup"); $("bkLast").textContent=t?"Letzte Sicherung: "+new Date(t).toLocaleString("de-DE",{day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit"}):"Noch keine Sicherung erstellt."; }
+$("bkExport").onclick=()=>{
+  const keys=BK_KEYS.concat($("bkKey").checked?["hkey"]:[]), data={};
+  keys.forEach(k=>{ const v=store.get(k); if(v) data[k]=v; });
+  const blob=new Blob([JSON.stringify({app:"die-website",version:1,exported:new Date().toISOString(),data},null,1)],{type:"application/json"});
+  const a=document.createElement("a"), d=new Date();
+  a.href=URL.createObjectURL(blob); a.download="die-website-sicherung-"+d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")+".json";
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),2000);
+  store.set("last_backup",String(Date.now())); bkLastShow();
+};
+function bkMerge(cur,inc,key){
+  if(!["notes_v1","cal_v1","hist","tagesgeld_hopping_v1","orders","nwdaily","claude_ideas_done"].includes(key)) return cur;   // einfache Werte und Einstellungen: vorhandene behalten
+  const j=t=>{ try{ return JSON.parse(t); }catch(e){ return null; } };
+  const c=j(cur), i=j(inc); if(c===null||typeof c!=="object") return inc; if(i===null||typeof i!=="object") return cur;
+  if(key==="notes_v1"){
+    const m=new Map((c.items||[]).map(n=>[n.id,n]));
+    (i.items||[]).forEach(n=>{ const o=m.get(n.id); if(!o||(n.updated||0)>(o.updated||0)) m.set(n.id,n); });
+    return JSON.stringify({items:[...m.values()],sel:c.sel||i.sel});
+  }
+  if(key==="cal_v1"){
+    const out={...c};
+    for(const [d,es] of Object.entries(i)){ const ex=new Map((out[d]||[]).map(e=>[e.id,e])); (es||[]).forEach(e=>{ if(!ex.has(e.id)) ex.set(e.id,e); }); out[d]=[...ex.values()]; }
+    return JSON.stringify(out);
+  }
+  if(key==="hist"){
+    const out={...c};
+    for(const [pid,days] of Object.entries(i)){ out[pid]={...(out[pid]||{})}; for(const [d,v] of Object.entries(days||{})) out[pid][d]=Object.assign({},v,out[pid][d]||{}); }
+    return JSON.stringify(out);
+  }
+  if(key==="tagesgeld_hopping_v1"){   // Angebote vereinen, Betrag und Filter des aktuellen Stands behalten
+    const m=new Map((c.offers||[]).map(o=>[o.id,o])); (i.offers||[]).forEach(o=>{ if(!m.has(o.id)) m.set(o.id,o); });
+    return JSON.stringify({...c,offers:[...m.values()]});
+  }
+  if(key==="orders" && Array.isArray(c) && Array.isArray(i)){   // SkyBlock-Orders: gleiche Einträge nur einmal
+    const seen=new Set(c.map(o=>JSON.stringify(o))); return JSON.stringify(c.concat(i.filter(o=>!seen.has(JSON.stringify(o)))));
+  }
+  if(key==="nwdaily") return JSON.stringify(Object.assign({},i,c));
+  if(key==="claude_ideas_done"){ const out=Object.assign({},i,c); Object.keys(i).forEach(k=>{ if(i[k]) out[k]=true; }); return JSON.stringify(out); }
+  return cur;   // einfache Werte und Einstellungen: vorhandene behalten
+}
+$("bkImport").onclick=async()=>{
+  const st=(t,err)=>{ $("bkStatus").className="status"+(err?" err":""); $("bkStatus").textContent=t; };
+  const f=$("bkFile").files[0]; if(!f){ st("Bitte zuerst eine Datei auswählen.",true); return; }
+  let j; try{ j=JSON.parse(await f.text()); }catch(e){ st("Die Datei ist kein gültiges JSON.",true); return; }
+  if(!j||j.app!=="die-website"||!j.data||typeof j.data!=="object"){ st("Das ist keine Sicherung von Die Website.",true); return; }
+  const allowed=BK_KEYS.concat(["hkey"]), keys=Object.keys(j.data).filter(k=>allowed.includes(k)&&typeof j.data[k]==="string");
+  if(!keys.length){ st("Die Sicherung enthält keine Daten.",true); return; }
+  const cnt=(k,fn)=>{ try{ return fn(JSON.parse(j.data[k])); }catch(e){ return 0; } };
+  const sum=[cnt("notes_v1",d=>(d.items||[]).length)+" Notizen",cnt("cal_v1",d=>Object.keys(d).length)+" Kalendertage",cnt("hist",d=>Object.values(d).reduce((a,v)=>a+Object.keys(v).length,0))+" Verlaufstage",cnt("tagesgeld_hopping_v1",d=>(d.offers||[]).length)+" Tagesgeld-Angebote"].join(", ");
+  const replace=document.querySelector('input[name="bkMode"]:checked').value==="replace";
+  if(!confirm((replace?"Vorhandene Daten werden ersetzt.\n":"Die Daten werden zusammengeführt.\n")+"Sicherung vom "+(j.exported?new Date(j.exported).toLocaleDateString("de-DE"):"?")+": "+sum+".\nFortfahren?")) return;
+  keys.forEach(k=>{ const cur=store.get(k); store.set(k,(replace||!cur)?j.data[k]:bkMerge(cur,j.data[k],k)); });
+  st("Import fertig ("+sum+"). Die Seite lädt neu …"); setTimeout(()=>location.reload(),900);
+};
+
 /* ---------- Kalender ---------- */
 let CAL={}; try{ CAL=JSON.parse(store.get("cal_v1")||"{}"); }catch(e){}
 const calSave=()=>store.set("cal_v1",JSON.stringify(CAL));
@@ -1353,7 +1578,14 @@ const CLAUDE_IDEAS=[
  ["i012","2026-10-22","Seite online hosten (z. B. GitHub Pages oder Netlify): Voraussetzung für den Spotify-Login und nebenbei Zugriff von mehreren Geräten."],
  ["i013","2026-10-22","Heute-Leiste: einstellbar machen, welche Infos sie zeigt (Termine, Notiz, Notizen-Anzahl, weitere Rubriken)."],
  ["i014","2026-10-23","Export und Import wird beim Umzug auf GitHub Pages wichtig: Notizen, Kalender und Verlauf liegen pro Web-Adresse im Browser, die lokale Datei und die neue Adresse teilen sie nicht."],
- ["i015","2026-10-23","Der Passwort-Dialog ist nur ein Sichtschutz. Echter Schutz bräuchte einen Login auf Serverseite, z. B. ein privates Repository mit Cloudflare Access oder Netlify-Passwortschutz."]
+ ["i015","2026-10-23","Der Passwort-Dialog ist nur ein Sichtschutz. Echter Schutz bräuchte einen Login auf Serverseite, z. B. ein privates Repository mit Cloudflare Access oder Netlify-Passwortschutz."],
+ ["i016","2026-10-22","Tagesgeld Hopping: Angebote anhand des tatsächlichen Brutto-/später Nettoertrags über 12 Monate ranken – Aktionszins, Laufzeit, Folge-Zins, Höchstbetrag und Angebotsende einrechnen."],
+ ["i017","2026-10-22","Tagesgeld Hopping: Sicherheitsfilter vor die Rendite setzen. Rechtliche Bank und zuständiges gesetzliches Einlagensicherungssystem über offizielle Quellen verifizieren; EU-Sitz oder ein Vermittlername allein reicht nicht."],
+ ["i018","2026-10-23","Erinnerung auf der Heute-Leiste, wenn die letzte Sicherung älter als 14 Tage ist."],
+ ["i019","2026-10-23","Daten zwischen Geräten abgleichen, z. B. über ein privates GitHub-Gist, damit Notizen und Kalender am PC und am Handy gleich sind."],
+ ["i020","2026-10-23","Tagesgeld: Aktionsende automatisch als Kalendereintrag mit Erinnerung anlegen, so läuft der Zinswechsel nicht aus Versehen ab."],
+ ["i021","2026-10-23","Tagesgeld: Nettoertrag mit Steuer, Freibetrag und Zinseszins statt nur Bruttozins, plus Wechselaufwand als Abzug."],
+ ["i022","2026-10-23","Tagesgeld vollautomatisch: Live-Zinsen gehen nur über eine lizenzierte oder offizielle Datenquelle (Vergleichsportale haben meist keine freie Schnittstelle). Realistische Zwischenstufe: Angebote per Einfügen oder CSV importieren."]
 ];
 let IDEA_DONE={}; try{ IDEA_DONE=JSON.parse(store.get("claude_ideas_done")||"{}"); }catch(e){}
 const ideasOpen=()=>CLAUDE_IDEAS.filter(i=>!IDEA_DONE[i[0]]).length;
@@ -1455,6 +1687,100 @@ $("apiLink").href="https://sky.shiiyu.moe/api/v2/profile/"+encodeURIComponent($(
 loadProfile();   // lädt im Hintergrund, damit der Tagesverlauf auch ohne Profil-Besuch wächst
 view(location.hash.slice(1));
 load(); loadItems(); loadInfo(); tick(); setInterval(tick,1000); setInterval(loadInfo,300000); setInterval(load,30000);
+
+
+/* ---------- Einstellungen der Heute-Leiste (eigener Speicher-Schlüssel) ---------- */
+const TODAY_SETTINGS_DEFAULTS={date:true,events:true,holidays:true,next:true,lastNote:true,noteCount:false,eventCount:false};
+let TODAY_SETTINGS={...TODAY_SETTINGS_DEFAULTS};
+try{const saved=JSON.parse(store.get("today_strip_v1")||"{}");TODAY_SETTINGS={...TODAY_SETTINGS_DEFAULTS,...saved};}catch(e){}
+function todayStripParts(settings){
+  const now=new Date(),k=ymd(now),entries=calEntries(k),holidays=calHols(k),parts=[];
+  const ch=(text,color)=>`<span class="ch" style="--cc:${color}">${text}</span>`;
+  if(settings.date)parts.push(`<span class="lbl">Heute</span><span class="today-date">${now.toLocaleDateString("de-DE",{weekday:"long",day:"numeric",month:"long"})}</span>`);
+  if(settings.holidays)holidays.forEach(h=>parts.push(ch(calEsc(h.name),HOL_COL[h.t]||"#6cc3ff")));
+  if(settings.events){entries.slice(0,3).forEach(e=>parts.push(ch((e.time?e.time+" ":"")+calEsc(e.text),e.done?"#8a99a6":"#6cc3ff")));if(entries.length>3)parts.push(`<span class="mu">+${entries.length-3} weitere Termine</span>`);}
+  if(settings.eventCount)parts.push(`<span class="mu">${entries.length} Termin${entries.length===1?"":"e"} heute</span>`);
+  if(settings.next){for(let i=1;i<=60;i++){const d=addDays(now,i),es=calEntries(ymd(d));if(es.length){parts.push(`<span class="mu">Als Nächstes: ${p2(d.getDate())}.${p2(d.getMonth()+1)}. ${calEsc(es[0].text)}</span>`);break;}}}
+  if(settings.lastNote){const note=NOTES.slice().sort((a,b)=>(b.updated||0)-(a.updated||0)).find(n=>n.text&&n.text.trim());if(note)parts.push(`<span class="mu">Notiz: ${calEsc(nTitle(note.text))}</span>`);}
+  if(settings.noteCount)parts.push(`<span class="mu">${NOTES.filter(n=>n.text&&n.text.trim()).length} gespeicherte Notizen</span>`);
+  if(!parts.length)parts.push('<span class="mu">Keine Inhalte ausgewählt</span>');
+  return parts;
+}
+homeTodayRender=function(){const target=$("homeToday");if(!target)return;target.innerHTML=todayStripParts(TODAY_SETTINGS).join('<span class="sp"></span>');};
+function todaySettingsSave(){store.set("today_strip_v1",JSON.stringify(TODAY_SETTINGS));homeTodayRender();}
+function todaySettingsRender(){
+  document.querySelectorAll('[data-today-option]').forEach(input=>{input.checked=!!TODAY_SETTINGS[input.dataset.todayOption];input.onchange=()=>{TODAY_SETTINGS[input.dataset.todayOption]=input.checked;todaySettingsSave();};});
+  const reset=$("todaySettingsReset");if(reset)reset.onclick=()=>{TODAY_SETTINGS={...TODAY_SETTINGS_DEFAULTS};todaySettingsRender();todaySettingsSave();};
+}
+const todayToggle=$("todaySettingsToggle"),todayPanel=$("todaySettingsPanel");
+if(todayToggle&&todayPanel){
+  todayToggle.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();const open=todayPanel.classList.contains("hide");todayPanel.classList.toggle("hide",!open);todayToggle.setAttribute("aria-expanded",String(open));});
+  document.addEventListener("click",e=>{if(!todayPanel.contains(e.target)&&!todayToggle.contains(e.target)){todayPanel.classList.add("hide");todayToggle.setAttribute("aria-expanded","false");}});
+  document.addEventListener("keydown",e=>{if(e.key==="Escape"){todayPanel.classList.add("hide");todayToggle.setAttribute("aria-expanded","false");}});
+}
+todaySettingsRender();homeTodayRender();
+
+
+/* ---------- Tagesgeld Hopping: lokaler Angebotsvergleich ---------- */
+(()=>{
+  const KEY="tagesgeld_hopping_v1";
+  const defaults={amount:10000,safeOnly:true,offers:[]};
+  let state={...defaults};
+  try{const raw=JSON.parse(store.get(KEY)||"{}");state={...defaults,...raw,offers:Array.isArray(raw.offers)?raw.offers:[]};}catch(e){}
+  const byId=id=>document.getElementById(id);
+  const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const num=(id)=>Math.max(0,Number(byId(id)?.value)||0);
+  const save=()=>store.set(KEY,JSON.stringify(state));
+  const eur=v=>new Intl.NumberFormat("de-DE",{style:"currency",currency:"EUR",maximumFractionDigits:2}).format(v);
+  function annual(o){
+    const amount=Math.max(0,Number(state.amount)||0), promoCap=Number(o.cap)>0?Math.min(amount,Number(o.cap)):amount;
+    const promoMonths=Math.min(12,Math.max(0,Number(o.promoMonths)||0));
+    return promoCap*((Number(o.promoRate)||0)/100)*(promoMonths/12)+amount*((Number(o.baseRate)||0)/100)*((12-promoMonths)/12);
+  }
+  function render(){
+    const amount=byId("thAmount"),safe=byId("thSafeOnly"),list=byId("thOffers");
+    if(!amount||!safe||!list)return;
+    amount.value=String(state.amount);safe.checked=!!state.safeOnly;
+    const offers=state.offers.filter(o=>!state.safeOnly||o.verified).slice().sort((a,b)=>annual(b)-annual(a));
+    if(!offers.length){list.innerHTML='<div class="th-empty">'+(state.safeOnly&&state.offers.length?'Keine als geprüft markierten Angebote. Deaktiviere den Sicherheitsfilter, um alle eingetragenen Angebote zu sehen.':'Noch keine Angebote eingetragen. Trage oben ein Angebot ein, um den 12-Monats-Vergleich zu starten.')+'</div>';return;}
+    list.innerHTML=offers.map(o=>{
+      const originalIndex=state.offers.findIndex(x=>x.id===o.id);
+      const promoMonths=Math.min(12,Math.max(0,Number(o.promoMonths)||0));
+      const amount=Number(state.amount)||0, promoCap=Number(o.cap)>0?Math.min(amount,Number(o.cap)):amount;
+      const interest=promoCap*((Number(o.promoRate)||0)/100)*(promoMonths/12)+amount*((Number(o.baseRate)||0)/100)*((12-promoMonths)/12);
+      const url=(()=>{try{const u=new URL(o.url);return ["http:","https:"].includes(u.protocol)?u.href:"";}catch(e){return "";}})();
+      return `<article class="th-offer"><div class="th-offer-head"><div><h4>${esc(o.bank)}</h4><div class="th-small">${esc(o.country)}${o.end?" · Aktion bis "+esc(o.end):""}</div></div><div class="th-rate">${eur(interest)}<div class="th-small">brutto / 12 Monate</div></div></div><div class="th-pills"><span class="th-pill ${o.verified?"safe":"warn"}">${o.verified?"Sicherheitscheck manuell markiert":"Sicherheit nicht verifiziert"}</span><span class="th-pill">${Number(o.promoRate).toLocaleString("de-DE")} % für ${promoMonths} Mon.</span><span class="th-pill">danach ${Number(o.baseRate).toLocaleString("de-DE")} %</span>${Number(o.cap)>0?`<span class="th-pill">Limit ${eur(o.cap)}</span>`:""}</div>${o.notes?`<p class="th-small">${esc(o.notes)}</p>`:""}${url?`<p class="th-small"><a href="${esc(url)}" target="_blank" rel="noopener noreferrer">Angebotsseite öffnen ↗</a></p>`:""}<div class="th-actions"><button type="button" class="th-secondary" data-th-delete="${originalIndex}">Angebot entfernen</button></div></article>`;
+    }).join("");
+  }
+  const form=byId("thForm");
+  if(form){
+    byId("thAmount").addEventListener("change",()=>{state.amount=Math.max(1,num("thAmount"));save();render();});
+    byId("thSafeOnly").addEventListener("change",e=>{state.safeOnly=e.target.checked;save();render();});
+    form.addEventListener("submit",e=>{
+      e.preventDefault();
+      const promoMonths=Math.min(12,num("thPromoMonths"));
+      const offer={id:Date.now().toString(36)+Math.random().toString(36).slice(2,7),bank:byId("thBank").value.trim(),country:byId("thCountry").value.trim(),promoRate:num("thPromoRate"),promoMonths,baseRate:num("thBaseRate"),cap:num("thCap"),end:byId("thEnd").value,url:byId("thUrl").value.trim(),verified:byId("thVerified").checked,notes:byId("thNotes").value.trim(),created:Date.now()};
+      if(!offer.bank||!offer.country)return;
+      if(offer.url){try{const u=new URL(offer.url);if(!["http:","https:"].includes(u.protocol))throw new Error();}catch(err){alert("Bitte eine gültige http- oder https-Angebots-URL eingeben oder das Feld leeren.");return;}}
+      state.offers.push(offer);save();form.reset();byId("thPromoMonths").value="6";render();
+    });
+    form.addEventListener("reset",()=>{setTimeout(()=>{byId("thPromoMonths").value="6";},0);});
+    byId("thOffers").addEventListener("click",e=>{const b=e.target.closest("[data-th-delete]");if(!b)return;const i=Number(b.dataset.thDelete);if(Number.isInteger(i)&&i>=0&&i<state.offers.length){state.offers.splice(i,1);save();render();}});
+    render();
+  }
+})();
+
+/* ---------- Explizit gewünschte Notiz: Chats ideen ---------- */
+(()=>{
+  if(typeof NOTES==="undefined"||typeof saveNotes!=="function"||typeof npList!=="function")return;
+  const title="Chats ideen";
+  const seeded=store.get("seed_chats_ideen")==="1"; store.set("seed_chats_ideen","1");
+  if(!seeded&&!NOTES.some(n=>nTitle(n.text).toLocaleLowerCase("de-DE")===title.toLocaleLowerCase("de-DE"))){
+    NOTES.unshift({id:"chats-ideen-v1",text:"Chats ideen\n\n• Tagesgeld Hopping: zuerst echte Bank und Einlagensicherung verifizieren, dann den realistischen Ertrag über 12 Monate vergleichen.\n• Bei Aktionszinsen immer den Folge-Zins, Höchstbetrag und das Aktionsende einrechnen.\n• Später: Live-Angebote nur aus nachvollziehbaren, offiziellen oder seriösen Quellen einlesen und das Datum der letzten Prüfung anzeigen.\n• Später: Erinnerungen vor Ende eines Aktionszinses und einen Export der Angebotsliste ergänzen.",updated:Date.now()});
+    saveNotes();npList();
+  }
+})();
+
 </script>
 </body>
 </html>
