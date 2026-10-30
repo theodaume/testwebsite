@@ -1,0 +1,45 @@
+name: Gym-Auslastung messen
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gym-auslastung
+  cancel-in-progress: false
+
+jobs:
+  messen:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Auslastung abrufen und anhängen
+        env:
+          CLUB_ID: "2158632650"
+        run: |
+          set -uo pipefail
+          # nur zu den Öffnungszeiten messen (Berliner Zeit, 05:45 bis 23:15)
+          hhmm=$((10#$(TZ=Europe/Berlin date +%H%M)))
+          if [ "$hhmm" -lt 545 ] || [ "$hhmm" -gt 2315 ]; then echo "Außerhalb der Öffnungszeiten, keine Messung"; exit 0; fi
+          json=$(curl -fsS --max-time 20 -A "Mozilla/5.0 (privates Hobbyprojekt, Messung alle 15 Minuten)" "https://www.fitnessfirst.de/club/api/checkins/${CLUB_ID}") || { echo "Abruf fehlgeschlagen"; exit 0; }
+          pct=$(echo "$json" | jq -r '[.data.items[] | select(.isCurrent == true) | .percentage][0] // empty') || pct=""
+          if [ -z "$pct" ]; then echo "Keine aktuelle Auslastung geliefert"; exit 0; fi
+          mkdir -p daten
+          f=daten/gym-auslastung.csv
+          [ -f "$f" ] || echo "zeit_utc,prozent" > "$f"
+          echo "$(date -u +%Y-%m-%dT%H:%M:00Z),${pct}" >> "$f"
+
+      - name: Speichern
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add daten/gym-auslastung.csv || exit 0
+          git diff --cached --quiet && exit 0
+          git commit -m "Gym-Auslastung"
+          git pull --rebase
+          git push
